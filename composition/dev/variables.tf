@@ -1,20 +1,14 @@
-variable "environment" {
-  description = "Deployment environment"
-  type        = string
-  default     = "dev"
-}
-
 variable "region" {
   description = "The AWS region"
   type        = string
   default     = "ap-northeast-1"
 }
 
-variable "name" {
+variable "vpc_cidr"{
   type = string
 }
 
-variable "vpc_cidr"{
+variable "pet" {
   type = string
 }
 

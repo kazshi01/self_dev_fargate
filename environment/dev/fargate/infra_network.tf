@@ -5,24 +5,24 @@
 module "vpc" {
   source = "../../../modules/vpc"
 
-  name = "${var.environment}-marukome-vpc"
-  cidr = local.vpc_cidr
+  name = var.name
+  cidr = var.vpc_cidr
 
   azs              = local.azs
-  private_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k)]
-  public_subnets   = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 4)]
-  database_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 8)]
+  private_subnets  = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 8, k)]
+  public_subnets   = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 8, k + 4)]
+  database_subnets = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 8, k + 8)]
 
   private_subnet_names = ["Private Subnet A", "Private Subnet C", "Private Subnet D"]
 
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  enable_nat_gateway = true
-  single_nat_gateway = true
+  enable_nat_gateway = var.enable_nat_gateway
+  single_nat_gateway = var.single_nat_gateway
 
   manage_default_security_group = false
-  create_database_subnet_group  = false
+  create_database_subnet_group  = var.create_database_subnet_group
 
 }
 
