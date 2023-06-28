@@ -5,7 +5,7 @@
 module "vpc" {
   source = "../../../modules/vpc"
 
-  name = var.name
+  name = var.vpc_name
   cidr = var.vpc_cidr
 
   azs              = local.azs

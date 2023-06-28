@@ -1,14 +1,42 @@
-variable "region" {
-  description = "The AWS region"
-  type        = string
-  default     = "ap-northeast-1"
-}
+###################################
+# environment-layerと同じ値にする
+###################################
 
-variable "vpc_cidr"{
+variable "northeast_domain" {
   type = string
 }
 
+variable "alb_domain" {
+  type = string
+}
+
+variable "top_domain" {
+  type = string
+}
+
+###################################
+# Common
+###################################
+
+variable "region" {
+  description = "The AWS region"
+  type        = string
+}
+
+variable "environment" {
+  description = "Deployment environment"
+  type        = string
+}
+
 variable "pet" {
+  type = string
+}
+
+###################################
+# VPC
+###################################
+
+variable "vpc_cidr"{
   type = string
 }
 
@@ -28,4 +56,36 @@ variable "single_nat_gateway" {
   description = "Should be true if you want to provision a single shared NAT Gateway across all of your private networks"
   type        = bool
   default     = false
+}
+
+###################################
+# Cluster
+###################################
+
+
+
+###################################
+# Service
+###################################
+
+variable "container_port" {
+  type = number
+  default = 80
+}
+
+###################################
+# ALB
+###################################
+
+variable "load_balancer_type" {
+  type = string
+  default = "application"
+}
+
+###################################
+# Route53
+###################################
+
+variable "us_east_domain" {
+  type = string
 }
