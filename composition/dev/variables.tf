@@ -1,29 +1,40 @@
-###################################################
-# compositionlayerの変数を変更する時はここも同じ値にする
-###################################################
+###################################
+# environment-layerと同じ値にする
+###################################
+
 variable "northeast_domain" {
   type = string
-  default = "marukome0909.com"
 }
 
 variable "alb_domain" {
   type = string
-  default = "alb"
 }
 
 variable "top_domain" {
   type = string
-  default = "cloudfront"
 }
 
-###############################
-# VPC
-###############################
+###################################
+# Common
+###################################
 
-variable "vpc_name" {
+variable "region" {
+  description = "The AWS region"
+  type        = string
+}
+
+variable "environment" {
+  description = "Deployment environment"
+  type        = string
+}
+
+variable "pet" {
   type = string
-  default = "terrafrom-vpc"
 }
+
+###################################
+# VPC
+###################################
 
 variable "vpc_cidr"{
   type = string
@@ -51,24 +62,11 @@ variable "single_nat_gateway" {
 # Cluster
 ###################################
 
-variable "cluster_name" {
-  type = string
-  default     = "terrafrom-cluster"
-}
+
 
 ###################################
 # Service
 ###################################
-
-variable "service_name" {
-  type = string
-  default     = "terrafrom-service"
-}
-
-variable "container_name" {
-  type = string
-  default = "terraform-container"
-}
 
 variable "container_port" {
   type = number
@@ -76,62 +74,18 @@ variable "container_port" {
 }
 
 ###################################
-# ALB 
+# ALB
 ###################################
-
-variable "alb_name" {
-  type = string
-  default     = "terrafrom-alb"
-}
 
 variable "load_balancer_type" {
   type = string
   default = "application"
 }
 
-###############################
-# ROUTE53
-###############################
-variable "zone_name" {
-  type =string
-}
-
-variable "zones" {
-  type = any
-}
-
-variable "records" {
-  type = any
-}
-
 ###################################
-# ACM
+# Route53
 ###################################
 
-variable "zone_id" {
+variable "us_east_domain" {
   type = string
-}
-
-variable "northeast_domain_name" {
-  type = string
-}
-
-variable "us_east_domain_name" {
-  type = string
-}
-
-###################################
-# Cloudfront
-###################################
-
-variable "aliases" {
-  type = any
-}
-
-variable "origin" {
-  type = any
-}
-
-variable "default_cache_behavior" {
-  type = any
 }

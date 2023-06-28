@@ -5,7 +5,7 @@
 module "ecs_cluster" {
   source = "../../../modules/ecs/cluster"
 
-  cluster_name = "${var.environment}-marukome-cluster"
+  cluster_name = var.cluster_name
 
   # Capacity provider
   fargate_capacity_providers = {
@@ -30,7 +30,7 @@ module "ecs_cluster" {
 module "ecs_service" {
   source = "../../../modules/ecs/service"
 
-  name        = "${var.environment}-marukome-service"
+  name        = var.service_name
   cluster_arn = module.ecs_cluster.arn
 
   cpu    = 1024
@@ -39,16 +39,16 @@ module "ecs_service" {
   # Container definition(s)
   container_definitions = {
 
-    (local.container_name) = {
+    (var.container_name) = {
       cpu       = 512
       memory    = 1024
       essential = true
       image     = "nginx:latest" ###のちにECRイメージを指定
       port_mappings = [
         {
-          name          = local.container_name
-          containerPort = local.container_port
-          hostPort      = local.container_port
+          name          = var.container_name
+          containerPort = var.container_port
+          hostPort      = var.container_port
           protocol      = "tcp"
         }
       ]
@@ -65,8 +65,8 @@ module "ecs_service" {
   load_balancer = {
     service = {
       target_group_arn = element(module.alb.target_group_arns, 0)
-      container_name   = local.container_name
-      container_port   = local.container_port
+      container_name   = var.container_name
+      container_port   = var.container_port
     }
   }
 
@@ -74,8 +74,8 @@ module "ecs_service" {
   security_group_rules = {
     alb_ingress = {
       type                     = "ingress"
-      from_port                = local.container_port
-      to_port                  = local.container_port
+      from_port                = var.container_port
+      to_port                  = var.container_port
       protocol                 = "tcp"
       description              = "Service port"
       source_security_group_id = module.alb.security_group_id

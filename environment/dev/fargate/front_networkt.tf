@@ -5,9 +5,9 @@
 module "alb" {
   source = "../../../modules/alb"
 
-  name = "${var.environment}-marukome-alb"
+  name = var.alb_name
 
-  load_balancer_type = "application"
+  load_balancer_type = var.load_balancer_type
 
   vpc_id  = module.vpc.vpc_id
   subnets = module.vpc.public_subnets
@@ -99,10 +99,10 @@ module "zones" {
   source = "../../../modules/route53/zones"
 
   zones = {
-    "${local.domain}" = {
-      comment = "${local.domain} (production)"
+    "${var.northeast_domain}" = {
+      comment = "${var.northeast_domain} (production)"
       tags = {
-        Name = local.domain
+        Name = var.northeast_domain
       }
     }
   }
@@ -111,11 +111,11 @@ module "zones" {
 module "records" {
   source = "../../../modules/route53/records"
 
-  zone_name = local.zone_name
+  zone_name = var.zone_name
 
   records = [
     {
-      name = local.alb_domain
+      name = var.alb_domain
       type = "A"
       alias = {
         name                   = module.alb.lb_dns_name
@@ -126,7 +126,7 @@ module "records" {
 
 
     {
-      name = local.top_domain
+      name = var.top_domain
       type = "A"
       alias = {
         name    = module.cloudfront.cloudfront_distribution_domain_name
@@ -145,12 +145,9 @@ module "records" {
 module "acm" {
   source = "../../../modules/acm"
 
-  domain_name = "${local.alb_domain}.${local.domain_name}"
-  zone_id     = local.zone_id
+  domain_name = var.northeast_domain_name
+  zone_id     = var.zone_id
 
-  tags = {
-    Name = "${local.alb_domain}.${local.domain_name}"
-  }
 }
 
 module "acm_us_east" {
@@ -160,12 +157,9 @@ module "acm_us_east" {
     aws = aws.us_east
   }
 
-  domain_name = local.acm_domain_name
-  zone_id     = local.zone_id
+  domain_name = var.us_east_domain_name
+  zone_id     = var.zone_id
 
-  tags = {
-    Name = "${local.top_domain}.${local.domain_name}"
-  }
 }
 
 ###############################
@@ -175,7 +169,7 @@ module "acm_us_east" {
 module "cloudfront" {
   source = "../../../modules/cloudfront"
 
-  aliases = ["${local.top_domain}.${local.domain_name}"]
+  aliases = var.aliases
 
   comment             = "My awesome CloudFront"
   enabled             = true
@@ -185,40 +179,9 @@ module "cloudfront" {
   retain_on_delete    = false
   wait_for_deployment = false
 
-  origin = {
-    "${local.alb_domain}" = {
-      domain_name = "${local.alb_domain}.${local.domain_name}"
-      custom_origin_config = {
-        http_port              = 80
-        https_port             = 443
-        origin_protocol_policy = "https-only"
-        origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-      }
+  origin = var.origin
 
-      custom_header = [
-        {
-          name  = "X-Forwarded-Scheme"
-          value = "https"
-        },
-        {
-          name  = "X-Frame-Options"
-          value = "SAMEORIGIN"
-        }
-      ]
-    }
-  }
-
-  default_cache_behavior = {
-    target_origin_id       = "${local.alb_domain}"
-    viewer_protocol_policy = "https-only"
-    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-    cached_methods         = ["GET", "HEAD"]
-    compress               = true
-    query_string           = true
-
-    # This is id for SecurityHeadersPolicy copied from https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-response-headers-policies.html
-    response_headers_policy_id = "67f7725c-6f97-4210-82d7-5512b31e9d03"
-  }
+  default_cache_behavior = var.default_cache_behavior
 
   viewer_certificate = {
     acm_certificate_arn = module.acm_us_east.acm_certificate_arn
