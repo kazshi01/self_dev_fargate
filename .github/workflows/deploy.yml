@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - github/actions
+    paths:
+    - sample-python-web-app/**
+    - .github/workflows/**
 
 env:
   AWS_REGION: ap-northeast-1
