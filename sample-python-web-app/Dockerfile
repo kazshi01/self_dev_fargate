@@ -1,11 +1,7 @@
 FROM nginx
 
 # Install python and pip
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    python3 \
-    python3-pip \
-    python3-dev \
+RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommends build-essential python3 python3-pip python3-dev \
     && pip3 install pipenv \
     && rm -rf /var/lib/apt/lists/*
 
