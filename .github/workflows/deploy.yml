@@ -39,7 +39,7 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
           image: ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-          registry: 996109426400.dkr.ecr.ap-northeast-1.amazonaws.com/dev/practice
+          registry: 996109426400.dkr.ecr.ap-northeast-1.amazonaws.com
           dockerfile: ./sample-python-web-app/Dockerfile
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
