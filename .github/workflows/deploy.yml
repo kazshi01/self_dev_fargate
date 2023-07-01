@@ -36,11 +36,18 @@ jobs:
 
       - name: Build and push
         id: build-push
-        uses: docker/build-push-action@v2
+        uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          context: ./sample-python-web-app
-          push: true
-          tags: ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          image: ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          registry: 996109426400.dkr.ecr.ap-northeast-1.amazonaws.com/dev/practice
+          dockerfile: ./sample-python-web-app/Dockerfile
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+      - name: Logout of Amazon ECR
+        if: always()
+        run: docker logout ${{ steps.login-ecr.outputs.registry }}
 
       - name: Update terraform.tfvars
         run: |
