@@ -9,15 +9,20 @@ on:
       - .github/workflows/CD.yml
       - ./terraform/**
 
-permissions:                   ## GitHubとAWSの連携に必要
-  id-token: write
-  contents: read
+# permissions:                   ## GitHubとAWSの連携に必要
+#   id-token: write
+#   contents: read
 
 env:
   AWS_REGION: ap-northeast-1 # your AWS region
   # ECR_REPOSITORY: dev/practice # your ECR repository name
   # TF_S3_BACKEND_BUCKET: my-tf-backend-bucket # S3 bucket for Terraform state
   # TF_VAR_FARGATE_IMAGE: "" # Docker image for Fargate service
+
+defaults: 
+  run:
+    shell: bash
+    working-directory: ./terraform/composition/dev
 
 jobs:
   deploy:
