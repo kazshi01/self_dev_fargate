@@ -16,7 +16,7 @@ env:
   # TF_VAR_FARGATE_IMAGE: "" # Docker image for Fargate service
 
 jobs:
-  ImageBuild-and-Deploy:
+  Build-and-push:
     runs-on: ubuntu-latest
     
     steps:
@@ -46,18 +46,43 @@ jobs:
       - name: Update terraform.tfvars
         run: |
           sed -i "s/^image_tag.*/image_tag = \"${{ github.run_number }}\"/" ./terraform/composition/dev/terraform.tfvars
-        
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
           name: tfvars
           path: ./terraform/composition/dev/terraform.tfvars
-        
+
+  Deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
           name: tfvars
           path: ./terraform/composition/dev/
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      
+      # - name: Archive production artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: tfvars
+      #     path: ./terraform/composition/dev/terraform.tfvars
+        
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: tfvars
+      #     path: ./terraform/composition/dev/
       
       - name: Terraform code check and plan
         run: |
@@ -65,7 +90,6 @@ jobs:
           terraform fmt -check
           terraform init -no-color
           terraform validate -no-color
-          terraform plan
-          terraform apply -auto-approve
+          terraform plan -input=false -no-color -detailed-exitcode
 
 
