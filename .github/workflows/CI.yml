@@ -60,6 +60,12 @@ jobs:
         with:
           name: tfvars
           path: ./terraform/composition/dev/
+      
+      - name: Terraform apply
+        run: |
+          cd ./terraform/composition/dev/
+          terraform init
+          terraform plan
         
         # Now use ./terraform/composition/dev/terraform.tfvars in subsequent steps...
         
