@@ -72,18 +72,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
       
-      # - name: Archive production artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: tfvars
-      #     path: ./terraform/composition/dev/terraform.tfvars
-        
-      # - name: Download artifacts
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: tfvars
-      #     path: ./terraform/composition/dev/
-      
       - name: Terraform code check and plan
         run: |
           cd ./terraform/composition/dev/
