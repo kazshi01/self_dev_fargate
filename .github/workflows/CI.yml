@@ -67,10 +67,10 @@ jobs:
   #     # - name: Terraform apply
   #     #   run: |
   #     #     cd ./terraform/composition/dev/
-  #     #     terraform fmt -check
-  #     #     terraform init
-  #     #     terraform validate -no-color
-  #     #     terraform plan
+          # terraform fmt -check
+          # terraform init
+          # terraform validate -no-color
+          # terraform plan
         
       - name: Download artifacts
         uses: actions/download-artifact@v2
@@ -81,7 +81,9 @@ jobs:
       - name: Terraform apply
         run: |
           cd ./terraform/composition/dev/
-          terraform init
+          terraform fmt -check
+          terraform init -no-color
+          terraform validate -no-color
           terraform plan
         
         # Now use ./terraform/composition/dev/terraform.tfvars in subsequent steps...
