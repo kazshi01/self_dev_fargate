@@ -1,5 +1,5 @@
 # ECR Image
-fargate_image
+fargate_image = "my-ecr-repo:latest"
 
 # environment-layerと同じ値にする
 northeast_domain = "marukome0909.com"

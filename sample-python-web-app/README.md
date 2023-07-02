@@ -4,7 +4,7 @@ This is a basic Python application, used in a number of AWS tutorials, that focu
 
 ## Security
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information
 
 ## License.
 
