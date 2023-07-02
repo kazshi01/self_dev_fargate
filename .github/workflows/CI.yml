@@ -47,6 +47,7 @@ jobs:
         run: |
           sed -i '' "s/^image_tag.*/image_tag = \\\"${{ github.sha }}\\\"/" ./terraform/composition/dev/terraform.tfvars
     
+    
 
       # - name: Commit and push changes
       #   run: |
