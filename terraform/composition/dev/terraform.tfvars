@@ -1,5 +1,5 @@
 # ECR image
-image_tag = "github-actions-a16d5f7"
+image_tag = "01ce80a6627acd6365600192db45b7323ca3e7c8"
 
 # environment-layerと同じ値にする
 northeast_domain = "marukome0909.com"
