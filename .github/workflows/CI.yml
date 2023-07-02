@@ -42,7 +42,11 @@ jobs:
           file: ./sample-python-web-app/Dockerfile
           push: true
           tags: 996109426400.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ github.run_number }}
-
+      
+  later-steps:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
       - name: Update terraform.tfvars
         run: |
           sed -i "s/^image_tag.*/image_tag = \"${{ github.run_number }}\"/" ./terraform/composition/dev/terraform.tfvars
