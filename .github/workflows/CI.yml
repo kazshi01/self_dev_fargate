@@ -43,10 +43,9 @@ jobs:
           push: true
           tags: 996109426400.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
-      # - name: Update terraform.tfvars
-      #   run: |
-      #     sed -i '/^fargate_image/c\
-      #     fargate_image = \"${{ github.ref_name }}-${{ github.sha }}\"' ./composition/dev/example.tfvars
+      - name: Update terraform.tfvars
+        run: |
+          sed -i 's/^image_tag.*/image_tag = "${{ github.sha }}"/' ./composition/dev/terraform.tfvars
 
       # - name: Commit and push changes
       #   run: |
