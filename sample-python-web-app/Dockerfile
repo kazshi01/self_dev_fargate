@@ -1,21 +1,11 @@
-FROM nginx:latest
+#FROM - Image to start building on.
+FROM ubuntu:14.04
 
-# Install python and pip
-RUN apt-get clean && apt-get update && apt-get install -y --no-install-recommends build-essential python3 python3-pip python3-dev \
-    && pip3 install pipenv \
-    && rm -rf /var/lib/apt/lists/*
+#MAINTAINER - Identifies the maintainer of the dockerfile.
+# MAINTAINER ian.miell@gmail.com
 
-# install our code
-ADD . /home/docker/code/
+#RUN - Runs a command in the container
+RUN echo "Hello world" > /tmp/hello_world.txt
 
-# Configure Nginx
-RUN ln -s /home/docker/code/nginx-app.conf /etc/nginx/conf.d/ \
-    && mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.ORIGINAL
-
-# Install application requirements
-WORKDIR /home/docker/code
-RUN pipenv install
-
-# Start uWSGI daemon
-EXPOSE 80 
-CMD ["pipenv", "run", "./start.sh"]
+#CMD - Identifies the command that should be used by default when running the image as a container.
+CMD ["cat", "/tmp/hello_world.txt"]
