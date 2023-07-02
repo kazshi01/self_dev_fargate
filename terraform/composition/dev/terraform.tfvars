@@ -1,5 +1,5 @@
 # ECR image
-image_tag = "01ce80a6627acd6365600192db45b7323ca3e7c8"
+image_tag = "78f9e06f0ef4ce79e25622206393ed91e1824b59"
 
 # environment-layerと同じ値にする
 northeast_domain = "marukome0909.com"

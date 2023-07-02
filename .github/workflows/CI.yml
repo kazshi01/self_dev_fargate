@@ -45,8 +45,7 @@ jobs:
 
       - name: Update terraform.tfvars
         run: |
-          sed -i '' "s/^image_tag.*/image_tag = \\\"${{ github.sha }}\\\"/" ./terraform/composition/dev/terraform.tfvars
-    
+          sed -i '' "s/^image_tag.*/image_tag = \"${{ github.sha }}\"/" ./terraform/composition/dev/terraform.tfvars    
     
 
       # - name: Commit and push changes
