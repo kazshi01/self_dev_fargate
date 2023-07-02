@@ -3,19 +3,19 @@ image_tag = "github-actions-a16d5f7"
 
 # environment-layerと同じ値にする
 northeast_domain = "marukome0909.com"
-alb_domain = "alb"
-top_domain = "cloudfront"
+alb_domain       = "alb"
+top_domain       = "cloudfront"
 
 # Common
-region = "ap-northeast-1"
+region      = "ap-northeast-1"
 environment = "dev"
-pet = "marukome"
+pet         = "marukome"
 
 # VPC
-vpc_cidr = "10.0.0.0/16"
+vpc_cidr                     = "10.0.0.0/16"
 create_database_subnet_group = false
-enable_nat_gateway = true
-single_nat_gateway = true
+enable_nat_gateway           = true
+single_nat_gateway           = true
 
 # Cluster
 

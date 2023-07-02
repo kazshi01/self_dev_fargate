@@ -36,7 +36,7 @@ variable "pet" {
 # VPC
 ###################################
 
-variable "vpc_cidr"{
+variable "vpc_cidr" {
   type = string
 }
 
@@ -69,7 +69,7 @@ variable "single_nat_gateway" {
 ###################################
 
 variable "container_port" {
-  type = number
+  type    = number
   default = 80
 }
 
@@ -90,7 +90,7 @@ variable "image_tag" {
 ###################################
 
 variable "load_balancer_type" {
-  type = string
+  type    = string
   default = "application"
 }
 

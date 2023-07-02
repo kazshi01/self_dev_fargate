@@ -41,8 +41,8 @@ locals {
 
   ##ACM
   # Removing trailing dot from domain - just to be sure :)
-  northeast_domain_name      = trimsuffix(var.northeast_domain, ".")
-  us_east_domain_name  = trimsuffix(var.us_east_domain, ".")
+  northeast_domain_name = trimsuffix(var.northeast_domain, ".")
+  us_east_domain_name   = trimsuffix(var.us_east_domain, ".")
 
   ##Cloudfront
   origin = {
