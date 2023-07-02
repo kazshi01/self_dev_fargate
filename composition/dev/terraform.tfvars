@@ -1,7 +1,10 @@
+# ECR image
+image_tag = "github-actions-a16d5f7"
+
 # environment-layerと同じ値にする
 northeast_domain = "marukome0909.com"
 alb_domain = "alb"
-top_domain = "top"
+top_domain = "cloudfront"
 
 # Common
 region = "ap-northeast-1"
@@ -18,7 +21,6 @@ single_nat_gateway = true
 
 # Service
 container_port = 80
-image_tag = "github-actions-7b4f948"
 
 # ALB
 load_balancer_type = "application"
