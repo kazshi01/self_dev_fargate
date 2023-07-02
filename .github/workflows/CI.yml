@@ -46,11 +46,6 @@ jobs:
       - name: Update terraform.tfvars
         run: |
           sed -i "s/^image_tag.*/image_tag = \"${{ github.run_number }}\"/" ./terraform/composition/dev/terraform.tfvars
-      
-  later-steps:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
         
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
