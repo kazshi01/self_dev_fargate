@@ -16,7 +16,7 @@ env:
   # TF_VAR_FARGATE_IMAGE: "" # Docker image for Fargate service
 
 jobs:
-  build-and-push:
+  ImageBuild-and-Deploy:
     runs-on: ubuntu-latest
     
     steps:
@@ -53,25 +53,6 @@ jobs:
           name: tfvars
           path: ./terraform/composition/dev/terraform.tfvars
         
-        # Later steps...
-  # later-steps:
-  #   needs: build-and-push
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # - name: Download artifacts
-  #     #   uses: actions/download-artifact@v2
-  #     #   with:
-  #     #     name: tfvars
-  #     #     path: ./terraform/composition/dev/
-
-  #     # - name: Terraform apply
-  #     #   run: |
-  #     #     cd ./terraform/composition/dev/
-          # terraform fmt -check
-          # terraform init
-          # terraform validate -no-color
-          # terraform plan
-        
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
@@ -85,14 +66,5 @@ jobs:
           terraform init -no-color
           terraform validate -no-color
           terraform plan
-        
-        # Now use ./terraform/composition/dev/terraform.tfvars in subsequent steps...
-        
 
-      # - name: Commit and push changes
-      #   run: |
-      #     git config --global user.email "you@example.com"
-      #     git config --global user.name "Your Name"
-      #     git commit -am "Update Fargate service image"
-      #     git push
 
