@@ -71,7 +71,6 @@ jobs:
           terraform init -no-color
           terraform validate -no-color
           terraform plan
-          # working-directoryを指定
         
       # - name: Download artifacts
       #   uses: actions/download-artifact@v2
