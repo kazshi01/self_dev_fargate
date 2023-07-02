@@ -90,6 +90,6 @@ jobs:
           terraform fmt -check
           terraform init -no-color
           terraform validate -no-color
-          terraform plan -input=false -no-color -detailed-exitcode
+          terraform plan
 
 
