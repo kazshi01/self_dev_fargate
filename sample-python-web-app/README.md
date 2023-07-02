@@ -6,6 +6,6 @@ This is a basic Python application, used in a number of AWS tutorials, that focu
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information
 
-## License.
+## License
 
 This library is licensed under the MIT-0 License. See the LICENSE file
