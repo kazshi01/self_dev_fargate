@@ -18,6 +18,7 @@ single_nat_gateway = true
 
 # Service
 container_port = 80
+image_tag = "github-actions-7b4f948"
 
 # ALB
 load_balancer_type = "application"
