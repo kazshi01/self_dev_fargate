@@ -45,17 +45,17 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Update terraform.tfvars
-        run: |
-          sed -i '/^fargate_image/c\
-          fargate_image = \"${{ github.ref_name }}-${{ github.sha }}\"' ./composition/dev/example.tfvars
+      # - name: Update terraform.tfvars
+      #   run: |
+      #     sed -i '/^fargate_image/c\
+      #     fargate_image = \"${{ github.ref_name }}-${{ github.sha }}\"' ./composition/dev/example.tfvars
 
-      - name: Commit and push changes
-        run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
-          git commit -am "Update Fargate service image"
-          git push
+      # - name: Commit and push changes
+      #   run: |
+      #     git config --global user.email "you@example.com"
+      #     git config --global user.name "Your Name"
+      #     git commit -am "Update Fargate service image"
+      #     git push
 
   # deploy:
   #   needs: build-and-push

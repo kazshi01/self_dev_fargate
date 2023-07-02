@@ -1,4 +1,11 @@
+data "aws_ecr_repository" "existing_repo" {
+  name = "dev/practice"
+}
+
 locals {
+
+  image = "${data.aws_ecr_repository.existing_repo.repository_url}:${var.image_tag}"
+
   zones = {
     "${var.northeast_domain}" = {
       comment = "${var.northeast_domain} (production)"

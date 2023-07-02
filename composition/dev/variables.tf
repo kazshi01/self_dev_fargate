@@ -73,6 +73,18 @@ variable "container_port" {
   default = 80
 }
 
+variable "image" {
+  description = "The image to use"
+  type        = string
+  default     = "my-default-image"
+}
+
+variable "image_tag" {
+  description = "The tag for the ECR image"
+  type        = string
+  default     = "latest"
+}
+
 ###################################
 # ALB
 ###################################

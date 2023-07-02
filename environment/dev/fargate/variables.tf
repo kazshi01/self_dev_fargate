@@ -75,6 +75,12 @@ variable "container_port" {
   default = 80
 }
 
+variable "image" {
+  description = "The image to use"
+  type        = string
+  default     = "my-default-image"
+}
+
 ###################################
 # ALB 
 ###################################

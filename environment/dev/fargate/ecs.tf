@@ -43,7 +43,7 @@ module "ecs_service" {
       cpu       = 512
       memory    = 1024
       essential = true
-      image     = "nginx:latest" ###のちにECRイメージを指定
+      image     = var.image ###のちにECRイメージを指定
       port_mappings = [
         {
           name          = var.container_name

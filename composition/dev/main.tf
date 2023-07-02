@@ -17,6 +17,7 @@ module "fargate" {
   service_name  = "${var.environment}-${var.pet}-service"
   container_name = "${var.environment}-${var.pet}-container"
   container_port = var.container_port
+  image = local.image
 
   ## ALB
   alb_name = "${var.environment}-${var.pet}-alb"

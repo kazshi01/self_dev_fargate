@@ -24,6 +24,3 @@ load_balancer_type = "application"
 
 # Route53
 us_east_domain = "*.marukome0909.com"
-
-# ECR Image
-fargate_image = "dev/practice:github/actions-78ff01014541e6e0ef6639f406e9af5e2cbe9dbb"
