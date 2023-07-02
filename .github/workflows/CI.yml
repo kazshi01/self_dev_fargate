@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 on:
   push:
@@ -6,12 +6,8 @@ on:
       - main
       - github/actions
     paths:
-    - sample-python-web-app/**
-    - .github/workflows/**
-
-permissions:                ## GitHubとAWSの連携に必要
-  id-token: write
-  contents: read
+      - sample-python-web-app/**
+      - .github/workflows/CI.yml
 
 env:
   AWS_REGION: ap-northeast-1 # your AWS region
@@ -27,13 +23,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Configure AWS credentials
-      #   # if: github.ref == 'refs/heads/github/actions'
-      #   uses: aws-actions/configure-aws-credentials@v2
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: ${{ env.AWS_REGION }}
+      - name: Configure AWS credentials
+        # if: github.ref == 'refs/heads/github/actions'
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1

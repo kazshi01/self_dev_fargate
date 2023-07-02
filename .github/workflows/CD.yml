@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: 
+      - main
+      - github/actions
+    paths:
+      - .github/workflows/CD.yml
+      - ./terraform/**
+
+permissions:                   ## GitHubとAWSの連携に必要
+  id-token: write
+  contents: read
+
+# env:
+  # AWS_REGION: ap-northeast-1 # your AWS region
+  # ECR_REPOSITORY: dev/practice # your ECR repository name
+  # TF_S3_BACKEND_BUCKET: my-tf-backend-bucket # S3 bucket for Terraform state
+  # TF_VAR_FARGATE_IMAGE: "" # Docker image for Fargate service
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ${{ env.AWS_REGION }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform plan
+
