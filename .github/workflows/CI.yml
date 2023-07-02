@@ -65,12 +65,13 @@ jobs:
           path: ./terraform/composition/dev/
 
       - name: Terraform apply
+        working-directory: ./terraform/composition/dev/
         run: |
           terraform fmt -check
           terraform init -no-color
           terraform validate -no-color
           terraform plan
-        working-directory: ./terraform/composition/dev/  # working-directoryを指定
+          # working-directoryを指定
         
       # - name: Download artifacts
       #   uses: actions/download-artifact@v2
