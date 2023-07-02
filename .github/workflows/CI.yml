@@ -58,31 +58,31 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: tfvars
-          path: ./terraform/composition/dev/
-
-      - name: Terraform apply
-        run: |
-          cd ./terraform/composition/dev/
-          terraform fmt -check
-          terraform init -no-color
-          terraform validate -no-color
-          terraform plan
-        
       # - name: Download artifacts
       #   uses: actions/download-artifact@v2
       #   with:
       #     name: tfvars
       #     path: ./terraform/composition/dev/
-      
+
       # - name: Terraform apply
       #   run: |
       #     cd ./terraform/composition/dev/
+      #     terraform fmt -check
       #     terraform init
+      #     terraform validate -no-color
       #     terraform plan
+        
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: tfvars
+          path: ./terraform/composition/dev/
+      
+      - name: Terraform apply
+        run: |
+          cd ./terraform/composition/dev/
+          terraform init
+          terraform plan
         
         # Now use ./terraform/composition/dev/terraform.tfvars in subsequent steps...
         
