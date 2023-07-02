@@ -47,7 +47,7 @@ jobs:
 
       - name: Update terraform.tfvars
         run: |
-          sed -i '/^fargate_image/c\ 
+          sed -i '/^fargate_image/c\
           fargate_image = \"${{ github.ref_name }}-${{ github.sha }}\"' ./composition/dev/example.tfvars
 
       - name: Commit and push changes
