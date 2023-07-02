@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -54,18 +54,35 @@ jobs:
           path: ./terraform/composition/dev/terraform.tfvars
         
         # Later steps...
-        
+  later-steps:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
           name: tfvars
           path: ./terraform/composition/dev/
-      
+
       - name: Terraform apply
         run: |
-          cd ./terraform/composition/dev/
-          terraform init
+          terraform fmt -check
+          terraform init -no-color
+          terraform validate -no-color
           terraform plan
+        working-directory: ./terraform/composition/dev/  # working-directoryを指定
+        
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: tfvars
+      #     path: ./terraform/composition/dev/
+      
+      # - name: Terraform apply
+      #   run: |
+      #     cd ./terraform/composition/dev/
+      #     terraform init
+      #     terraform plan
         
         # Now use ./terraform/composition/dev/terraform.tfvars in subsequent steps...
         
