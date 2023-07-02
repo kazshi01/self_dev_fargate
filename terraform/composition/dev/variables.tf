@@ -82,7 +82,6 @@ variable "image" {
 variable "image_tag" {
   description = "The tag for the ECR image"
   type        = string
-  default     = "latest"
 }
 
 ###################################

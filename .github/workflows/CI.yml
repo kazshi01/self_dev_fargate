@@ -59,7 +59,7 @@ jobs:
           name: tfvars
           path: ./terraform/composition/dev/
       
-      - name: Terraform apply
+      - name: Terraform code check and plan
         run: |
           cd ./terraform/composition/dev/
           terraform fmt -check
