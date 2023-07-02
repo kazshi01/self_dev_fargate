@@ -66,6 +66,6 @@ jobs:
           terraform init -no-color
           terraform validate -no-color
           terraform plan
-          terraform apply -auto-aprove
+          terraform apply -auto-approve
 
 
