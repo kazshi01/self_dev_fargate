@@ -83,6 +83,6 @@ jobs:
           -backend-config="region=${{ env.AWS_REGION }}"
           terraform validate -no-color
           terraform plan
-          terraform destroy -auto-approve
+          terraform apply -auto-approve
 
 
