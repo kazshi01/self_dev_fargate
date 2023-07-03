@@ -72,7 +72,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
       
-      - name: Terraform code check and plan
+      - name: Terraform code check and plan     ##最初に手動でterraform init -backend-config=backend-config.tfvarsでs3を読み込ませておく
         run: |
           cd ./terraform/composition/dev/
           terraform fmt -check
