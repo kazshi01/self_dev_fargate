@@ -12,7 +12,7 @@ on:
 env:
   AWS_REGION: ap-northeast-1 # your AWS region
   ECR_REPOSITORY: dev/practice # your ECR repository name
-  # TF_S3_BACKEND_BUCKET: my-tf-backend-bucket # S3 bucket for Terraform state
+  TF_S3_BACKEND_BUCKET: my-tf-backend-bucket # S3 bucket for Terraform state
   # TF_VAR_FARGATE_IMAGE: "" # Docker image for Fargate service
 
 jobs:
@@ -76,7 +76,10 @@ jobs:
         run: |
           cd ./terraform/composition/dev/
           terraform fmt -check
-          terraform init -no-color -backend-config=backend-config.tfvars
+          terraform init -no-color \
+          -backend-config="bucket=${{env.TF_S3_BACKEND_BUCKET}}" \
+          -backend-config="key=github-actions/fargate" \
+          -backend-config="region=${{ env.AWS_REGION }}"
           terraform validate -no-color
           terraform plan
 
