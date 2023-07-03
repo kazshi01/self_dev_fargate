@@ -77,12 +77,8 @@ jobs:
         run: |
           cd ./terraform/composition/dev/
           terraform fmt -check
-          terraform init -no-color \
-          -backend-config="bucket=${{ env.TF_S3_BACKEND_BUCKET }}" \
-          -backend-config="key=${{ env.TF_S3_BACKEND_KEY }}" \
-          -backend-config="region=${{ env.AWS_REGION }}"
+          terraform init -no-color -backend-config=backend-config.tfvars
           terraform validate -no-color
           terraform plan
-          terraform apply -auto-approve
 
 
