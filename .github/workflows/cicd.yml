@@ -12,8 +12,8 @@ on:
 env:
   AWS_REGION: ap-northeast-1 # your AWS region
   ECR_REPOSITORY: dev/practice # your ECR repository name
-  TF_S3_BACKEND_BUCKET: self-dev-marukome # S3 bucket for Terraform state
-  TF_S3_BACKEND_KEY: github-actions/fargate # S3 bucket key for Terraform state
+  # TF_S3_BACKEND_BUCKET: self-dev-marukome # S3 bucket for Terraform state
+  # TF_S3_BACKEND_KEY: github-actions/fargate # S3 bucket key for Terraform state
   # TF_VAR_FARGATE_IMAGE: "" # Docker image for Fargate service
 
 jobs:
