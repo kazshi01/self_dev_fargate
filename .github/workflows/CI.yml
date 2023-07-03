@@ -76,7 +76,7 @@ jobs:
         run: |
           cd ./terraform/composition/dev/
           terraform fmt -check
-          terraform init -no-color
+          terraform init -no-color -backend-config=backend-config.tfvars
           terraform validate -no-color
           terraform plan
 
