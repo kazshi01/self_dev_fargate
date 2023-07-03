@@ -7,7 +7,7 @@ on:
       - github/actions
     paths:
       - sample-python-web-app/**
-      - .github/workflows/CI.yml
+      - .github/workflows/cicd.yml
 
 env:
   AWS_REGION: ap-northeast-1 # your AWS region
