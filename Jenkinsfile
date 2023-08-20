@@ -8,8 +8,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-                checkout scm
-
+        checkout scm
       }
     }
     stage('Building image') {
@@ -20,12 +19,7 @@ pipeline {
       }
     }
    
-stage('Deploy github/actions Image') {
-   when {
-      anyOf {
-            branch 'github/actions'
-      }
-     }
+    stage('Deploy github/actions Image') {
       steps{
         script {
           docker.withRegistry(ecrurl, ecrcredentials) {     
@@ -35,16 +29,9 @@ stage('Deploy github/actions Image') {
       }
     }
 
- 
-    stage('Remove Unused docker image - Master') {
-      when {
-      anyOf {
-            branch 'github/actions'
-      }
-     }
+    stage('Remove Unused docker image - github/actions') {
       steps{
         sh "docker rmi $image_name:$BUILD_NUMBER"
-
       }
     } // End of remove unused docker image for github/actions
   }  
