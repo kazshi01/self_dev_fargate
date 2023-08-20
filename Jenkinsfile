@@ -1,9 +1,9 @@
 pipeline {
   environment {
     image_name = "test"
-    ecrurl = "996109426400.dkr.ecr.ap-northeast-1.amazonaws.com/jenkins/practice"
-    ecrcredentials = "AWS access key"
-  } 
+    ecrurl = "https://996109426400.dkr.ecr.ap-northeast-1.amazonaws.com/jenkins/practice"
+    ecrcredentials = "ecr:ap-northeast-1:AWS access key"
+  }
   agent any
   stages {
     stage('Cloning Git') {
@@ -18,11 +18,14 @@ pipeline {
         }
       }
     }
-   
+
     stage('Deploy github/actions Image') {
       steps{
         script {
-          docker.withRegistry(ecrurl, ecrcredentials) {     
+          // cleanup current user docker credentials
+          sh 'rm -f ~/.dockercfg ~/.docker/config.json || true'
+
+          docker.withRegistry(ecrurl, ecrcredentials) {
             dockerImage.push("$BUILD_NUMBER")
           }
         }
@@ -34,5 +37,5 @@ pipeline {
         sh "docker rmi $image_name:$BUILD_NUMBER"
       }
     } // End of remove unused docker image for github/actions
-  }  
+  }
 } //end of pipeline
