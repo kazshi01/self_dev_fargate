@@ -1,7 +1,7 @@
 pipeline {
   environment {
-    image_name = "test"
-    ecrurl = "https://996109426400.dkr.ecr.ap-northeast-1.amazonaws.com/jenkins/practice"
+    image_name = "jenkins/practice"
+    ecrurl = "https://996109426400.dkr.ecr.ap-northeast-1.amazonaws.com"
     ecrcredentials = "ecr:ap-northeast-1:AWS_ACCESS_KEY"
   }
   agent any
