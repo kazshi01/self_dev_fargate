@@ -65,7 +65,7 @@ pipeline {
 stage('Deploy github/actions Image') {
    when {
       anyOf {
-            branch 'github/actions'
+            branch 'refs/remotes/origin/github/actions'
       }
      }
       steps{
@@ -81,7 +81,7 @@ stage('Deploy github/actions Image') {
     stage('Remove Unused docker image - github/actions') {
       when {
       anyOf {
-            branch 'github/actions'
+            branch 'refs/remotes/origin/github/actions'
       }
      }
       steps{
