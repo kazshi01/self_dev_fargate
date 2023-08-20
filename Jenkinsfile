@@ -42,10 +42,9 @@
 
 pipeline {
   environment {
-    imagename = "jenkins/practice"
+    image_name = "jenkins/practice"
     ecrurl = "https://996109426400.dkr.ecr.ap-northeast-1.amazonaws.com"
     ecrcredentials = "ecr:ap-northeast-1:AWS_ACCESS_KEY"
-    dockerImage = ''
   } 
   agent any
   stages {
@@ -72,7 +71,7 @@ stage('Deploy github/actions Image') {
       steps{
         script {
           docker.withRegistry(ecrurl, ecrcredentials) {     
-            dockerImage.push("$BUILD_NUMBER")
+            dockerImage.push("nginx:0.1.$BUILD_NUMBER")
           }
         }
       }
