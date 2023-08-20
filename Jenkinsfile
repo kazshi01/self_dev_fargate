@@ -57,7 +57,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build("${image_name}:${BUILD_NUMBER}", './sample-python-web-app')
+          dockerImage = docker.build("${image_name}:nginx:0.1.${BUILD_NUMBER}", './sample-python-web-app')
         }
       }
     }
@@ -75,7 +75,7 @@ stage('Deploy Image') {
  
     stage('Remove Unused docker image') {     
       steps{
-        sh "docker rmi $image_name:$BUILD_NUMBER"
+        sh "docker rmi $image_name:nginx:0.1.$BUILD_NUMBER"
       }
     } // End of remove unused docker image for master
   }  
