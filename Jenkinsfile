@@ -62,12 +62,7 @@ pipeline {
       }
     }
    
-stage('Deploy github/actions Image') {
-   when {
-      anyOf {
-            branch 'refs/remotes/origin/github/actions'
-      }
-     }
+stage('Deploy Image') {
       steps{
         script {
           docker.withRegistry(ecrurl, ecrcredentials) {     
@@ -78,12 +73,7 @@ stage('Deploy github/actions Image') {
     }
 
  
-    stage('Remove Unused docker image - github/actions') {
-      when {
-      anyOf {
-            branch 'refs/remotes/origin/github/actions'
-      }
-     }
+    stage('Remove Unused docker image') {     
       steps{
         sh "docker rmi $image_name:$BUILD_NUMBER"
       }
