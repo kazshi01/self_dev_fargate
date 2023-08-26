@@ -40,7 +40,8 @@ resource "aws_iam_policy" "codebuild_policy" {
           "ecr:ListImages",
           "ecr:ListTagsForResource",
           "ecr:DescribeImages",
-          "ec2:DescribeAvailabilityZones"
+          "ec2:DescribeAvailabilityZones",
+          "logs:DescribeLogGroups"
         ],
         Resource = "*"
       }
