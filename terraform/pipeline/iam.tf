@@ -16,6 +16,27 @@ resource "aws_iam_role" "codebuild_role" {
   })
 }
 
+resource "aws_iam_policy" "codebuild_batchget_builds_policy" {
+  name        = "codebuild-batchget-builds-policy"
+  description = "Policy to allow BatchGetBuilds action in CodeBuild"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = ["codebuild:BatchGetBuilds"],
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild_batchget_builds_attachment" {
+  policy_arn = aws_iam_policy.codebuild_batchget_builds_policy.arn
+  role       = aws_iam_role.codebuild_role.name
+}
+
 # IAM Role for CodePipeline
 resource "aws_iam_role" "codepipeline_role" {
   name = "codepipeline-role"
@@ -37,7 +58,7 @@ resource "aws_iam_role" "codepipeline_role" {
 data "aws_iam_policy_document" "codepipeline_s3_policy" {
   statement {
     actions   = ["s3:PutObject"]
-    resources = ["arn:aws:s3:::self-dev-marukome/codepipeline/fargate/*"]
+    resources = ["arn:aws:s3:::self-dev-marukome/*"]
   }
 }
 
