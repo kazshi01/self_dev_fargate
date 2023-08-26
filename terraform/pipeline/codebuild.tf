@@ -9,6 +9,12 @@ resource "aws_codebuild_project" "terraform_plan" {
     type = "CODEPIPELINE"
   }
 
+  source {
+    type      = "CODEPIPELINE"
+    location  = "https://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/self_dev_fargate_repo"
+    buildspec = "buildspec-plan.yml"
+  }
+
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "ubuntu:latest"
@@ -19,10 +25,6 @@ resource "aws_codebuild_project" "terraform_plan" {
       name  = "TERRAFORM_ACTION"
       value = "plan"
     }
-  }
-
-  source {
-    type = "CODEPIPELINE"
   }
 }
 
@@ -37,6 +39,12 @@ resource "aws_codebuild_project" "terraform_apply" {
     type = "CODEPIPELINE"
   }
 
+  source {
+    type      = "CODEPIPELINE"
+    location  = "https://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/self_dev_fargate_repo"
+    buildspec = "buildspec-apply.yml"
+  }
+
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "ubuntu:latest"
@@ -47,10 +55,6 @@ resource "aws_codebuild_project" "terraform_apply" {
       name  = "TERRAFORM_ACTION"
       value = "apply"
     }
-  }
-
-  source {
-    type = "CODEPIPELINE"
   }
 }
 

@@ -41,13 +41,14 @@ resource "aws_iam_policy" "codebuild_policy" {
           "ecr:ListTagsForResource",
           "ecr:DescribeImages",
           "ec2:DescribeAvailabilityZones",
-          "logs:DescribeLogGroups"
+          "logs:DescribeLogGroups",
         ],
         Resource = "*"
       }
     ]
   })
 }
+
 
 # Attach CodeBuild Policy to Role
 resource "aws_iam_role_policy_attachment" "codebuild_policy_attachment" {
@@ -105,7 +106,7 @@ resource "aws_iam_policy" "codepipeline_policy" {
           "codecommit:UploadArchive",
           "codecommit:GetUploadArchiveStatus",
           "codecommit:CancelUploadArchive",
-          "codebuild:StartBuild", # Add this action to allow CodePipeline to start CodeBuild
+          "codebuild:StartBuild",
         ],
         Resource = "*"
       }
