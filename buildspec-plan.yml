@@ -26,7 +26,3 @@ phases:
       - terraform validate
       - echo "Running terraform plan"
       - terraform plan -out=plan.out
-  build:
-    commands:
-      - echo "Running terraform apply"
-      - terraform apply -auto-approve plan.out
