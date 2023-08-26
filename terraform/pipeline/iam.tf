@@ -108,6 +108,11 @@ resource "aws_iam_policy" "codepipeline_policy" {
           "codecommit:CancelUploadArchive",
           "codebuild:StartBuild",
           "codebuild:BatchGetBuilds",
+          "s3:GetObject",
+          "s3:GetObjectVersion",
+          "s3:GetBucketVersioning",
+          "s3:PutObjectAcl",
+          "s3:PutObject",
         ],
         Resource = "*"
       }
