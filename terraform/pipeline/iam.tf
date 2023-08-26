@@ -38,7 +38,9 @@ resource "aws_iam_policy" "codebuild_policy" {
           "ecr:BatchCheckLayerAvailability",
           "ecr:DescribeRepositories",
           "ecr:ListImages",
-          "ecr:ListTagsForResource"
+          "ecr:ListTagsForResource",
+          "ecr:DescribeImages",
+          "ec2:DescribeAvailabilityZones"
         ],
         Resource = "*"
       }
