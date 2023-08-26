@@ -42,6 +42,8 @@ resource "aws_iam_policy" "codebuild_policy" {
           "ecr:DescribeImages",
           "ec2:DescribeAvailabilityZones",
           "logs:DescribeLogGroups",
+          "codecommit:GitPull",
+          "codecommit:GitPush"
         ],
         Resource = "*"
       }

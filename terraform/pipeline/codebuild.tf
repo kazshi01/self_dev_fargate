@@ -11,7 +11,6 @@ resource "aws_codebuild_project" "terraform_plan" {
 
   source {
     type      = "CODEPIPELINE"
-    location  = "https://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/self_dev_fargate_repo"
     buildspec = "buildspec-plan.yml"
   }
 
@@ -41,7 +40,6 @@ resource "aws_codebuild_project" "terraform_apply" {
 
   source {
     type      = "CODEPIPELINE"
-    location  = "https://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/self_dev_fargate_repo"
     buildspec = "buildspec-apply.yml"
   }
 
