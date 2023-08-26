@@ -15,6 +15,7 @@ phases:
 
   pre_build:
     commands:
+      - pwd 
       - cd terraform/composition/dev || exit 1
       - echo "Running terraform init"
       - terraform init
