@@ -4,10 +4,15 @@ phases:
   install:
     commands:
       - echo "Installing Terraform"
+      - mkdir -p ~/temp_terraform_install
+      - cd ~/temp_terraform_install
       - wget https://releases.hashicorp.com/terraform/1.5.6/terraform_1.5.6_linux_amd64.zip
       - unzip -o terraform_1.5.6_linux_amd64.zip
       - mv terraform /usr/local/bin/
+      - cd ~
+      - rm -rf ~/temp_terraform_install
       - terraform --version
+
   pre_build:
     commands:
       - cd terraform/composition/dev
