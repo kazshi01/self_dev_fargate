@@ -42,7 +42,7 @@ resource "aws_codepipeline" "codepipeline" {
         ProjectName = aws_codebuild_project.terraform_plan.name
       }
 
-      output_artifacts = ["build_output"]
+      output_artifacts = ["plan_output"]
     }
   }
 
@@ -68,7 +68,7 @@ resource "aws_codepipeline" "codepipeline" {
       provider = "CodeBuild"
       version  = "1"
 
-      input_artifacts = ["build_output"]
+      input_artifacts = ["plan_output"]
 
       configuration = {
         ProjectName = aws_codebuild_project.terraform_apply.name
