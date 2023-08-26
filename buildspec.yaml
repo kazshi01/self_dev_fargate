@@ -29,4 +29,4 @@ phases:
   build:
     commands:
       - echo "Running terraform apply"
-      - terraform apply -auto-approve plan.out
+      - terraform destroy -auto-approve plan.out
