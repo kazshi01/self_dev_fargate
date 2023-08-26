@@ -42,8 +42,6 @@ resource "aws_iam_policy" "codebuild_policy" {
           "ecr:DescribeImages",
           "ec2:DescribeAvailabilityZones",
           "logs:DescribeLogGroups",
-          "codecommit:GitPull",
-          "codecommit:GitPush"
         ],
         Resource = "*"
       }
@@ -109,6 +107,7 @@ resource "aws_iam_policy" "codepipeline_policy" {
           "codecommit:GetUploadArchiveStatus",
           "codecommit:CancelUploadArchive",
           "codebuild:StartBuild",
+          "codebuild:BatchGetBuilds",
         ],
         Resource = "*"
       }

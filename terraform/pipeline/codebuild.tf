@@ -5,6 +5,10 @@ resource "aws_codebuild_project" "terraform_plan" {
   build_timeout = 5
   service_role  = aws_iam_role.codebuild_role.arn
 
+  cache {
+    type = "NO_CACHE"
+  }
+
   artifacts {
     type = "CODEPIPELINE"
   }
@@ -34,6 +38,10 @@ resource "aws_codebuild_project" "terraform_apply" {
   build_timeout = 5
   service_role  = aws_iam_role.codebuild_role.arn
 
+  cache {
+    type = "NO_CACHE"
+  }
+
   artifacts {
     type = "CODEPIPELINE"
   }
@@ -54,5 +62,6 @@ resource "aws_codebuild_project" "terraform_apply" {
       value = "apply"
     }
   }
+
 }
 
