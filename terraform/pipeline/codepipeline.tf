@@ -19,7 +19,7 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         RepositoryName = "self_dev_fargate_repo"
-        BranchName     = "main"
+        BranchName     = "master"
       }
 
       output_artifacts = ["source_output"]
