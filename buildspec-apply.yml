@@ -4,6 +4,4 @@ phases:
   build:
     commands:
       - echo "Running terraform apply"
-      - aws s3 ls
-      # - aws s3 cp s3://self-dev-marukome/terraform-fargate-pi/source_out/plan.out plan.out
-      # - terraform apply plan.out
+      - terraform apply plan.out
