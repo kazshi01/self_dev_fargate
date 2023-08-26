@@ -4,4 +4,5 @@ phases:
   build:
     commands:
       - echo "Running terraform apply"
+      - aws s3 cp s3://my-bucket-name/my-plan-directory/plan.out plan.out
       - terraform apply plan.out
