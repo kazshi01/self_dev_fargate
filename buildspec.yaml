@@ -10,6 +10,7 @@ phases:
       - terraform --version
   pre_build:
     commands:
+      - cd terraform/composition/dev
       - echo "Running terraform init"
       - terraform init
       - echo "Running terraform validate"
