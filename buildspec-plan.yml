@@ -3,9 +3,6 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Installing dependencies"
-      - apt-get update
-      - apt-get install -y wget unzip
       - echo "Installing Terraform"
       - mkdir -p ~/temp_terraform_install || exit 1
       - cd ~/temp_terraform_install || exit 1
