@@ -15,6 +15,7 @@ phases:
 
   pre_build:
     commands:
+      - ls $CODEBUILD_SRC_DIR
       - cd $CODEBUILD_SRC_DIR/self_dev_fargate_repo/terraform/composition/dev || exit 1
       - echo "Running terraform init"
       - terraform init
