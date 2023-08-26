@@ -15,7 +15,7 @@ phases:
 
   pre_build:
     commands:
-      - cd /codebuild/output/src<some_random_string>/self_dev_fargate_repo/ || exit 1
+      - cd $CODEBUILD_SRC_DIR/self_dev_fargate_repo/terraform/composition/dev || exit 1
       - echo "Running terraform init"
       - terraform init
       - echo "Running terraform validate"
