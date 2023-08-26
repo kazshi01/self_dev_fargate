@@ -33,6 +33,9 @@ resource "aws_iam_policy" "codebuild_policy" {
           "logs:CreateLogGroup",
           "s3:PutObject",
           "s3:GetObject",
+          "ecr:DescribeRepositories",
+          "ecr:ListImages",
+          "ec2:DescribeAvailabilityZones"
         ],
         Resource = "*"
       }
