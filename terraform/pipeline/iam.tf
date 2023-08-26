@@ -1,4 +1,5 @@
 # IAM Role for CodeBuild
+# IAM Role for CodeBuild
 resource "aws_iam_role" "codebuild_role" {
   name = "codebuild-role"
 
@@ -16,45 +17,31 @@ resource "aws_iam_role" "codebuild_role" {
   })
 }
 
-resource "aws_iam_policy" "codebuild_batchget_builds_policy" {
-  name        = "codebuild-batchget-builds-policy"
-  description = "Policy to allow BatchGetBuilds action in CodeBuild"
+# CodeBuild Policy
+resource "aws_iam_policy" "codebuild_policy" {
+  name        = "codebuild-policy"
+  description = "Policy for CodeBuild"
 
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
-        Effect   = "Allow",
-        Action   = ["codebuild:BatchGetBuilds"],
+        Effect = "Allow",
+        Action = [
+          "codebuild:BatchGetBuilds",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:CreateLogGroup",
+        ],
         Resource = "*"
       }
     ]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild_batchget_builds_attachment" {
-  policy_arn = aws_iam_policy.codebuild_batchget_builds_policy.arn
-  role       = aws_iam_role.codebuild_role.name
-}
-
-resource "aws_iam_policy" "codebuild_cloudwatch_policy" {
-  name        = "codebuild-cloudwatch-policy"
-  description = "Policy to allow CloudWatch Logs actions in CodeBuild"
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect   = "Allow",
-        Action   = ["logs:CreateLogStream", "logs:PutLogEvents"],
-        Resource = "arn:aws:logs:ap-northeast-1:996109426400:log-group:/aws/codebuild/terraform-plan-project:*"
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "codebuild_cloudwatch_attachment" {
-  policy_arn = aws_iam_policy.codebuild_cloudwatch_policy.arn
+# Attach CodeBuild Policy to Role
+resource "aws_iam_role_policy_attachment" "codebuild_policy_attachment" {
+  policy_arn = aws_iam_policy.codebuild_policy.arn
   role       = aws_iam_role.codebuild_role.name
 }
 
