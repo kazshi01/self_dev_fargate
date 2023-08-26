@@ -37,6 +37,27 @@ resource "aws_iam_role_policy_attachment" "codebuild_batchget_builds_attachment"
   role       = aws_iam_role.codebuild_role.name
 }
 
+resource "aws_iam_policy" "codebuild_cloudwatch_policy" {
+  name        = "codebuild-cloudwatch-policy"
+  description = "Policy to allow CloudWatch Logs actions in CodeBuild"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = ["logs:CreateLogStream", "logs:PutLogEvents"],
+        Resource = "arn:aws:logs:ap-northeast-1:996109426400:log-group:/aws/codebuild/terraform-plan-project:*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild_cloudwatch_attachment" {
+  policy_arn = aws_iam_policy.codebuild_cloudwatch_policy.arn
+  role       = aws_iam_role.codebuild_role.name
+}
+
 # IAM Role for CodePipeline
 resource "aws_iam_role" "codepipeline_role" {
   name = "codepipeline-role"
