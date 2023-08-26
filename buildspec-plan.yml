@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing dependencies"
+      - apt-get update
+      - apt-get install -y wget unzip
+      - echo "Installing Terraform"
+      - mkdir -p ~/temp_terraform_install || exit 1
+      - cd ~/temp_terraform_install || exit 1
+      - wget https://releases.hashicorp.com/terraform/1.5.6/terraform_1.5.6_linux_amd64.zip || exit 1
+      - unzip -o terraform_1.5.6_linux_amd64.zip || exit 1
+      - mv terraform /usr/local/bin/ || exit 1
+      - cd ~ || exit 1
+      - rm -rf ~/temp_terraform_install || exit 1
+      - terraform --version || exit 1
+
+  pre_build:
+    commands:
+      - ls $CODEBUILD_SRC_DIR
+      - cd $CODEBUILD_SRC_DIR/terraform/composition/dev || exit 1
+      - echo "Running terraform init"
+      - terraform init -backend-config=backend-config.tfvars
+      - echo "Running terraform validate"
+      - terraform validate
+      - echo "Running terraform plan"
+      - terraform plan -out=plan.out
+  build:
+    commands:
+      - echo "Running terraform apply"
+      - terraform apply -auto-approve plan.out
