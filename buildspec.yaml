@@ -18,7 +18,7 @@ phases:
       - ls $CODEBUILD_SRC_DIR
       - cd $CODEBUILD_SRC_DIR/terraform/composition/dev || exit 1
       - echo "Running terraform init"
-      - terraform init
+      - terraform init -backend-config=backend-config.tfvars
       - echo "Running terraform validate"
       - terraform validate
       - echo "Running terraform plan"
