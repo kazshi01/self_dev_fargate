@@ -1,5 +1,4 @@
 # IAM Role for CodeBuild
-# IAM Role for CodeBuild
 resource "aws_iam_role" "codebuild_role" {
   name = "codebuild-role"
 
@@ -32,6 +31,8 @@ resource "aws_iam_policy" "codebuild_policy" {
           "logs:CreateLogStream",
           "logs:PutLogEvents",
           "logs:CreateLogGroup",
+          "s3:PutObject",
+          "s3:GetObject",
         ],
         Resource = "*"
       }
