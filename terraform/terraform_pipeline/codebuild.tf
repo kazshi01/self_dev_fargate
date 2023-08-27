@@ -15,7 +15,7 @@ resource "aws_codebuild_project" "terraform_plan" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "buildspec-plan.yml"
+    buildspec = "./specfile/buildspec-plan.yml"
   }
 
   environment {
@@ -48,7 +48,7 @@ resource "aws_codebuild_project" "terraform_apply" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "buildspec-apply.yml"
+    buildspec = "./specfile/buildspec-apply.yml"
   }
 
   environment {
