@@ -2,7 +2,7 @@ phases:
   pre_build:
     commands:
       - echo "Running get plan.out"
-      - aws s3 cp s3://self-dev-marukome/terraform-fargate-pi/plan_out/plan.out plan.out
+      - aws s3 cp s3://self-dev-marukome/terraform-fargate-pi/plan_out/* plan.out
       - ls
 
   post_build:
