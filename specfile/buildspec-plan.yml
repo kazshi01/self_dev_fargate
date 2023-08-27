@@ -1,12 +1,16 @@
 version: 0.2
 
+env:
+  variables:
+    TERRAFORM_VERSION: "1.5.6"
+
 phases:
   install:
     commands:
       - echo "Installing Terraform"
       - mkdir -p ~/temp_terraform_install || exit 1
       - cd ~/temp_terraform_install || exit 1
-      - wget https://releases.hashicorp.com/terraform/1.5.6/terraform_1.5.6_linux_amd64.zip || exit 1
+      - wget https://releases.hashicorp.com/terraform/"$TERRAFORM_VERSION"/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip || exit 1
       - unzip -o terraform_1.5.6_linux_amd64.zip || exit 1
       - mv terraform /usr/local/bin/ || exit 1
       - cd ~ || exit 1
@@ -23,4 +27,4 @@ phases:
       - terraform validate
       - echo "Running terraform plan"
       - terraform plan -out=plan.out
-      - aws s3 cp plan.out s3://self-dev-marukome/terraform-fargate-pi/plan_out/plan.out
+      - aws s3 cp plan.out s3://self-dev-marukome/terraform-fargate-pi/build_output/plan.out
