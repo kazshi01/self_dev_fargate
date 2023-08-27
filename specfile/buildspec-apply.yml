@@ -19,4 +19,4 @@ phases:
   build:
     commands:
       - echo "Running terraform apply"
-      - terraform apply --auto-approve plan.out
+      - terraform $TF_COMMAND --auto-approve plan.out

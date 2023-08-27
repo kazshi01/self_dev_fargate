@@ -42,13 +42,14 @@ resource "aws_iam_policy" "codebuild_policy" {
           "ecr:DescribeImages",
           "ec2:DescribeAvailabilityZones",
           "logs:DescribeLogGroups",
+          "ssm:Describe*",
+          "ssm:Get*"
         ],
         Resource = "*"
       }
     ]
   })
 }
-
 
 # Attach CodeBuild Policy to Role
 resource "aws_iam_role_policy_attachment" "codebuild_policy_attachment" {
@@ -74,6 +75,7 @@ resource "aws_iam_role" "codepipeline_role" {
   })
 }
 
+# IAM Role for CodePipeline
 data "aws_iam_policy_document" "codepipeline_s3_policy" {
   statement {
     actions   = ["s3:PutObject"]
