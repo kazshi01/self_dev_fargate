@@ -10,6 +10,18 @@ env:
     AWS_SECRET_ACCESS_KEY: "/CodeBuild/MY_AWS_SECRET_ACCESS_KEY"
 
 phases:
+  install:
+    commands:
+      - echo "Installing Terraform"
+      - mkdir -p ~/temp_terraform_install || exit 1
+      - cd ~/temp_terraform_install || exit 1
+      - wget https://releases.hashicorp.com/terraform/"$TERRAFORM_VERSION"/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip || exit 1
+      - unzip -o terraform_1.5.6_linux_amd64.zip || exit 1
+      - mv terraform /usr/local/bin/ || exit 1
+      - cd ~ || exit 1
+      - rm -rf ~/temp_terraform_install || exit 1
+      - terraform --version || exit 1
+      
   pre_build:
     commands:
       - echo "Running get plan.out"
