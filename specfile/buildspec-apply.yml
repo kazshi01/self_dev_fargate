@@ -20,17 +20,14 @@ phases:
       - mv terraform /usr/local/bin/ || exit 1
       - cd ~ || exit 1
       - rm -rf ~/temp_terraform_install || exit 1
-      - terraform --version || exit 1
-
-  pre_build:
-    commands:
-      - echo "Running get plan.out"
-      - aws s3 cp s3://self-dev-marukome/terraform-fargate-pi/build_output/plan.out plan.out
-      - ls
+      - terraform --version || exit 1s
 
   build:
     commands:
       - echo "Running terraform init"
       - terraform init
+      - echo "Running terraform plan"
+      - terraform plan -out=plan.out
       - echo "Running terraform apply"
-      - terraform $TF_COMMAND --auto-approve plan.out
+      - terraform apply --auto-approve "plan.out"
+
