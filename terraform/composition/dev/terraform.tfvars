@@ -1,5 +1,5 @@
 # ECR image
-image_tag = ""
+image_tag = "5"
 
 # environment-layerと同じ値にする
 northeast_domain = "marukome0909.com"

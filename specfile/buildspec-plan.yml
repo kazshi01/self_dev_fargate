@@ -26,4 +26,5 @@ phases:
       - echo "Running terraform validate"
       - terraform validate
       - echo "Running terraform plan"
-      - terraform plan
+      - terraform plan -out=plan.out
+      - aws s3 cp plan.out s3://self-dev-marukome/terraform-fargate-pi/build_output/plan.out
