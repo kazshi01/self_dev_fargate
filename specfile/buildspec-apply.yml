@@ -24,8 +24,10 @@ phases:
 
   build:
     commands:
+      - ls $CODEBUILD_SRC_DIR
+      - cd $CODEBUILD_SRC_DIR/terraform/composition/dev || exit 1
       - echo "Running terraform init"
-      - terraform init
+      - terraform init -backend-config=backend-config.tfvars
       - echo "Running terraform plan"
       - terraform plan -out=plan.out
       - echo "Running terraform apply"
