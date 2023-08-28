@@ -29,4 +29,4 @@ phases:
       - echo "Running terraform init"
       - terraform init -backend-config=backend-config.tfvars
       - echo "Running terraform apply"
-      - terraform $TF_COMMAND 
+      - terraform $TF_COMMAND --auto-approve
