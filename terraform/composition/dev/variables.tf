@@ -73,6 +73,12 @@ variable "container_port" {
   default = 80
 }
 
+variable "deployment_controller" {
+  description = "Configuration block for deployment controller configuration"
+  type        = any
+  default     = {}
+}
+
 variable "image" {
   description = "The image to use"
   type        = string

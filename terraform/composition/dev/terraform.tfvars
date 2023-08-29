@@ -1,5 +1,5 @@
 # ECR image
-image_tag = ""
+image_tag = "5"
 
 # environment-layerと同じ値にする
 northeast_domain = "marukome0909.com"
@@ -21,6 +21,9 @@ single_nat_gateway           = true
 
 # Service
 container_port = 80
+deployment_controller = {
+  type = "CODE_DEPLOY"
+}
 
 # ALB
 load_balancer_type = "application"
