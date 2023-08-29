@@ -604,6 +604,14 @@ output "cluster_autoscaling_capacity_providers" {
 # Service
 ################################################################################
 
+output "container_name" {
+  value = var.container_name
+}
+
+output "container_port" {
+  value = var.container_port
+}
+
 output "service_id" {
   description = "ARN that identifies the service"
   value       = module.ecs_service.id

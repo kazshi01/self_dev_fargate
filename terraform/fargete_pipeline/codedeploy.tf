@@ -10,6 +10,11 @@ resource "aws_codedeploy_deployment_group" "ecs_deployment_group" {
 
   deployment_config_name = "CodeDeployDefault.ECSAllAtOnce"
 
+  deployment_style {
+    deployment_type   = "BLUE_GREEN"
+    deployment_option = "WITH_TRAFFIC_CONTROL"
+  }
+
   auto_rollback_configuration {
     enabled = true
     events  = ["DEPLOYMENT_FAILURE"]
@@ -34,13 +39,13 @@ resource "aws_codedeploy_deployment_group" "ecs_deployment_group" {
   load_balancer_info {
     target_group_pair_info {
       target_group {
-        name = local.aws_lb_target_group_blue
+        name = local.alb_target_group_blue
       }
       target_group {
         name = aws_lb_target_group.green.name
       }
       prod_traffic_route {
-        listener_arns = [local.alb_listener_arn]
+        listener_arns = [local.https_listener_arn]
       }
     }
   }

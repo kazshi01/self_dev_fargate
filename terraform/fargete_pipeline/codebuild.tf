@@ -5,10 +5,7 @@ resource "aws_codebuild_project" "ecr_push" {
   service_role  = aws_iam_role.codebuild_role.arn
 
   artifacts {
-    type           = "CODEPIPELINE"
-    namespace_type = "NONE"
-    name           = "imagedefinitions.json"
-    packaging      = "NONE"
+    type = "CODEPIPELINE"
   }
 
   environment {
@@ -22,10 +19,7 @@ resource "aws_codebuild_project" "ecr_push" {
   }
 
   source {
-    type            = "CODECOMMIT"
-    location        = "https://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/self_dev_fargate_repo"
-    git_clone_depth = 1
-    buildspec       = "buildspec.yml"
+    type = "CODEPIPELINE"
   }
 }
 
