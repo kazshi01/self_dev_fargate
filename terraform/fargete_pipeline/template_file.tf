@@ -1,5 +1,5 @@
 data "template_file" "appspec" {
-  template = file("../../specfile/appspec.yml.tmpl")
+  template = file("./specfile/appspec.yml.tmpl")
 
   vars = {
     task_definition_arn = local.service_task_definition_arn
