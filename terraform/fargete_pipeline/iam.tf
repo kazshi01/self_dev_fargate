@@ -67,6 +67,27 @@ resource "aws_iam_role" "codepipeline_role" {
     ]
   })
 }
+# CodeCommitへのアクセス許可
+resource "aws_iam_policy" "codepipeline_codecommit_policy" {
+  name        = "codepipeline-codecommit-policy"
+  description = "CodePipeline permissions for CodeCommit"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action   = "codecommit:UploadArchive",
+        Effect   = "Allow",
+        Resource = "arn:aws:codecommit:ap-northeast-1:996109426400:self_dev_fargate_repo"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "codepipeline_codecommit_attachment" {
+  role       = aws_iam_role.codepipeline_role.name
+  policy_arn = aws_iam_policy.codepipeline_codecommit_policy.arn
+}
 
 # CodePipelineに必要なポリシーをアタッチ（例：S3, CodeBuild, CodeDeployへのアクセス許可）
 resource "aws_iam_role_policy_attachment" "codepipeline_s3_attachment" {
@@ -84,7 +105,3 @@ resource "aws_iam_role_policy_attachment" "codepipeline_codedeploy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployFullAccess"
 }
 
-resource "aws_iam_role_policy_attachment" "codepipeline_codecommit_attachment" {
-  role       = aws_iam_role.codepipeline_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitReadOnly"
-}
