@@ -55,7 +55,7 @@ resource "aws_codepipeline" "fargate_pipeline" {
       version         = "1"
 
       configuration = {
-        ApplicationName     = "MyApplication"
+        ApplicationName     = aws_codedeploy_app.ecs_app.name
         DeploymentGroupName = aws_codedeploy_deployment_group.ecs_deployment_group.deployment_group_name
       }
     }
