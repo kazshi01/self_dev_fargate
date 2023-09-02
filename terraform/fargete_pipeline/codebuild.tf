@@ -19,7 +19,8 @@ resource "aws_codebuild_project" "ecr_push" {
   }
 
   source {
-    type = "CODEPIPELINE"
+    type      = "CODEPIPELINE"
+    buildspec = "./specfile/buildspec.yml"
   }
 }
 
