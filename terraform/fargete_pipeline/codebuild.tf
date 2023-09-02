@@ -20,7 +20,7 @@ resource "aws_codebuild_project" "ecr_push" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "terraform/fargate_pipeline/specfile/buildspec.yml"
+    buildspec = "self_dev_fargate_repo/terraform/fargate_pipeline/specfile/buildspec.yml"
   }
 }
 
