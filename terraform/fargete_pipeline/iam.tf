@@ -76,7 +76,10 @@ resource "aws_iam_policy" "codepipeline_codecommit_policy" {
     Version = "2012-10-17",
     Statement = [
       {
-        Action   = "codecommit:UploadArchive",
+        Action = [
+          "codecommit:UploadArchive",
+          "codecommit:GetUploadArchiveStatus"
+        ],
         Effect   = "Allow",
         Resource = "arn:aws:codecommit:ap-northeast-1:996109426400:self_dev_fargate_repo"
       }
