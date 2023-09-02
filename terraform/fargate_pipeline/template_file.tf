@@ -10,6 +10,6 @@ data "template_file" "appspec" {
 
 resource "aws_s3_object" "appspec" {
   bucket  = var.bucket_name
-  key     = "fargate_pipeline/appspec.yml"
+  key     = "appspec.yml"
   content = data.template_file.appspec.rendered
 }

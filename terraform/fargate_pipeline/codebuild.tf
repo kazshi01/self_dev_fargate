@@ -19,7 +19,7 @@ resource "aws_codebuild_project" "ecr_push" {
     }
     environment_variable {
       name  = "APP_SPEC_BUCKET_PATH"
-      value = "s3://${var.bucket_name}/fargate-pipeline/appspec.yml"
+      value = "s3://${var.bucket_name}/appspec.yml"
     }
   }
 
