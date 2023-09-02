@@ -9,9 +9,10 @@ resource "aws_codebuild_project" "ecr_push" {
   }
 
   environment {
-    compute_type = "BUILD_GENERAL1_SMALL"
-    image        = "aws/codebuild/standard:5.0"
-    type         = "LINUX_CONTAINER"
+    compute_type    = "BUILD_GENERAL1_SMALL"
+    image           = "aws/codebuild/standard:5.0"
+    type            = "LINUX_CONTAINER"
+    privileged_mode = true
     environment_variable {
       name  = "AWS_DEFAULT_REGION"
       value = var.region
