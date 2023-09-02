@@ -17,6 +17,10 @@ resource "aws_codebuild_project" "ecr_push" {
       name  = "AWS_DEFAULT_REGION"
       value = var.region
     }
+    environment_variable {
+      name  = "APP_SPEC_BUCKET_PATH"
+      value = "s3://${var.bucket_name}/fargate-pipeline/appspec.yml"
+    }
   }
 
   source {

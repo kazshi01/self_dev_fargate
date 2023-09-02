@@ -26,6 +26,10 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - echo '[{"name":"containerName","imageUri":"'$REPOSITORY_URI:$IMAGE_TAG'"}]' > imagedefinitions.json
+      - aws s3 cp $APP_SPEC_BUCKET_PATH .
 
 artifacts:
-    files: imagedefinitions.json
+  files: 
+    - imagedefinitions.json
+    - appspec.yml
+
