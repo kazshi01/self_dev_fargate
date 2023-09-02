@@ -4,6 +4,8 @@ resource "aws_lb_target_group" "green" {
   protocol = "HTTP"
   vpc_id   = local.vpc_id
 
+  target_type = "ip"
+
   deregistration_delay = 10
 
   health_check {
