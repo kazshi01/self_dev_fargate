@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    AWS_DEFAULT_REGION: "ap-northeast-1"
+
 phases:
   pre_build:
     commands:
