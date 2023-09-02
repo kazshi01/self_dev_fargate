@@ -83,3 +83,8 @@ resource "aws_iam_role_policy_attachment" "codepipeline_codedeploy_attachment" {
   role       = aws_iam_role.codepipeline_role.name
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployFullAccess"
 }
+
+resource "aws_iam_role_policy_attachment" "codepipeline_codecommit_attachment" {
+  role       = aws_iam_role.codepipeline_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitReadOnly"
+}
