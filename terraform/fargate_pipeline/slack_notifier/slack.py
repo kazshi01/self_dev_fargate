@@ -1,39 +1,73 @@
 import json
 import urllib.request
+import boto3
 
 def lambda_handler(event, context):
-    slack_url = "https://hooks.slack.com/services/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"
+    client = boto3.client('codepipeline')
 
-    message = {
-        "text": "承認が必要です",
-        "attachments": [
-            {
-                "text": "承認しますか？",
-                "fallback": "承認するかどうかを選んでください",
-                "callback_id": "approval",
-                "color": "#3AA3E3",
-                "attachment_type": "default",
-                "actions": [
-                    {
-                        "name": "approve",
-                        "text": "承認",
-                        "type": "button",
-                        "value": "approve"
-                    },
-                    {
-                        "name": "reject",
-                        "text": "却下",
-                        "type": "button",
-                        "value": "reject"
-                    }
-                ]
-            }
-        ]
-    }
+    # CodePipeline からの event の場合
+    if 'CodePipeline.job' in event:
+        job_id = event['CodePipeline.job']['id']
+        approval_token = event['CodePipeline.job']['data']['actionConfiguration']['configuration']['UserParameters']
+        
+        # Slack に承認が必要な旨を通知
+        slack_url = "https://hooks.slack.com/services/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"
+        message = {
+            "text": "承認が必要です",
+            "attachments": [
+                {
+                    "text": "承認しますか？",
+                    "callback_id": job_id,  # CodePipeline の job ID を callback_id として保存
+                    "actions": [
+                        {
+                            "name": "approve",
+                            "text": "承認",
+                            "type": "button",
+                            "value": approval_token  # 承認用トークンを value として保存
+                        },
+                        {
+                            "name": "reject",
+                            "text": "却下",
+                            "type": "button",
+                            "value": approval_token  # 承認用トークンを value として保存
+                        }
+                    ]
+                }
+            ]
+        }
 
-    request = urllib.request.Request(
-        slack_url, 
-        data=json.dumps(message).encode('utf-8'), 
-        headers={'Content-Type': 'application/json'}
-    )
-    urllib.request.urlopen(request)
+        request = urllib.request.Request(
+            slack_url, 
+            data=json.dumps(message).encode('utf-8'), 
+            headers={'Content-Type': 'application/json'}
+        )
+        urllib.request.urlopen(request)
+        
+    # Slack からの event の場合
+    elif 'event' in event and event['event']['type'] == 'interactive_message':
+        action = event['actions'][0]['name']
+        approval_token = event['actions'][0]['value']
+        job_id = event['callback_id']
+
+        if action == 'approve':
+            client.put_approval_result(
+                pipelineName='fargate-pipeline',
+                stageName='InvokeLambdaBeforeApproval',
+                actionName='InvokeLambda',
+                result={
+                    'summary': 'Approved from Slack',
+                    'status': 'Approved'
+                },
+                token=approval_token
+            )
+        elif action == 'reject':
+            client.put_approval_result(
+                pipelineName='fargate-pipeline',
+                stageName='InvokeLambdaBeforeApproval',
+                actionName='InvokeLambda',
+                result={
+                    'summary': 'Rejected from Slack',
+                    'status': 'Rejected'
+                },
+                token=approval_token
+            )
