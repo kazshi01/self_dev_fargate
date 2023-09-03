@@ -7,6 +7,6 @@ resource "aws_lambda_function" "slack_approval" {
   filename         = "./slack_notifier/slack_function.zip"                   # 手元のZIPファイルのパス
   source_code_hash = filebase64sha256("./slack_notifier/slack_function.zip") # ソースコードが変更されたときにのみ更新をトリガーするためのパラメータ
 
-  timeout     = 30  # タイムアウトを30秒に設定
-  memory_size = 256 # メモリサイズを256MBに設定
+  timeout     = 5   # タイムアウトを設定
+  memory_size = 128 # メモリサイズを設定
 }

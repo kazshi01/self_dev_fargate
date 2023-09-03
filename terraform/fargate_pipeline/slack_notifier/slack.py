@@ -11,7 +11,7 @@ def lambda_handler(event, context):
         approval_token = event['CodePipeline.job']['data']['actionConfiguration']['configuration'].get('UserParameters', 'Default_Value')
         
         # Slack に承認が必要な旨を通知
-        slack_url = "https://hooks.slack.com/services/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"
+        slack_url = "https://hooks.slack.com/services/XXXX/XXXX/XXXX"
         message = {
             "text": "承認が必要です",
             "attachments": [
@@ -35,14 +35,13 @@ def lambda_handler(event, context):
                 }
             ]
         }
-
+        
         request = urllib.request.Request(
             slack_url, 
             data=json.dumps(message).encode('utf-8'), 
             headers={'Content-Type': 'application/json'}
         )
         
-        # デバッグ用のコードを追加
         try:
             response = urllib.request.urlopen(request)
             print("Response:", response.read().decode('utf-8'))
@@ -50,10 +49,11 @@ def lambda_handler(event, context):
             print("Error occurred:", e)
         
     # Slack からの event の場合
-    elif 'event' in event and event['event']['type'] == 'interactive_message':
-        action = event['actions'][0]['name']
-        approval_token = event['actions'][0]['value']
-        job_id = event['callback_id']
+    elif 'body' in event:
+        slack_event = json.loads(event['body'])
+        action = slack_event['actions'][0]['name']
+        approval_token = slack_event['actions'][0]['value']
+        job_id = slack_event['callback_id']
 
         if action == 'approve':
             client.put_approval_result(
@@ -77,3 +77,13 @@ def lambda_handler(event, context):
                 },
                 token=approval_token
             )
+
+        return {
+            'statusCode': 200,
+            'body': 'Done'
+        }
+
+    return {
+        'statusCode': 200,
+        'body': 'Done'
+    }
