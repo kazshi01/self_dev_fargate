@@ -8,7 +8,7 @@ def lambda_handler(event, context):
     # CodePipeline からの event の場合
     if 'CodePipeline.job' in event:
         job_id = event['CodePipeline.job']['id']
-        approval_token = event['CodePipeline.job']['data']['actionConfiguration']['configuration']['UserParameters']
+        approval_token = event['CodePipeline.job']['data']['actionConfiguration']['configuration'].get('UserParameters', 'Default_Value')
         
         # Slack に承認が必要な旨を通知
         slack_url = "https://hooks.slack.com/services/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"
@@ -41,7 +41,13 @@ def lambda_handler(event, context):
             data=json.dumps(message).encode('utf-8'), 
             headers={'Content-Type': 'application/json'}
         )
-        urllib.request.urlopen(request)
+        
+        # デバッグ用のコードを追加
+        try:
+            response = urllib.request.urlopen(request)
+            print("Response:", response.read().decode('utf-8'))
+        except Exception as e:
+            print("Error occurred:", e)
         
     # Slack からの event の場合
     elif 'event' in event and event['event']['type'] == 'interactive_message':
