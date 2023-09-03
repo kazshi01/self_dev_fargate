@@ -20,7 +20,7 @@ resource "aws_codepipeline" "fargate_pipeline" {
 
       configuration = {
         RepositoryName = "self_dev_fargate_repo"
-        BranchName     = "master"
+        BranchName     = "master" // 特定のディレクトリは指定できない
       }
     }
   }
@@ -40,6 +40,18 @@ resource "aws_codepipeline" "fargate_pipeline" {
       configuration = {
         ProjectName = aws_codebuild_project.ecr_push.name
       }
+    }
+  }
+
+  stage {
+    name = "ManualApproval"
+
+    action {
+      name     = "Approve"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
     }
   }
 

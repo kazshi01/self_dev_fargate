@@ -12,7 +12,7 @@ resource "aws_codedeploy_deployment_group" "ecs_deployment_group" {
 
   deployment_style {
     deployment_type   = "BLUE_GREEN"
-    deployment_option = "WITH_TRAFFIC_CONTROL"
+    deployment_option = "WITH_TRAFFIC_CONTROL" // ここでALBの切り替えを有効化
   }
 
   auto_rollback_configuration {
@@ -23,11 +23,12 @@ resource "aws_codedeploy_deployment_group" "ecs_deployment_group" {
   blue_green_deployment_config {
     terminate_blue_instances_on_deployment_success {
       action                           = "TERMINATE"
-      termination_wait_time_in_minutes = 5
+      termination_wait_time_in_minutes = 5 // ここでBlue環境のインスタンスを終了するまでの待機時間を設定
     }
 
     deployment_ready_option {
-      action_on_timeout = "CONTINUE_DEPLOYMENT"
+      action_on_timeout    = "STOP_DEPLOYMENT"
+      wait_time_in_minutes = 5 // ここでデプロイメントが「Ready」になるまでの待機時間を設定
     }
   }
 
@@ -39,13 +40,13 @@ resource "aws_codedeploy_deployment_group" "ecs_deployment_group" {
   load_balancer_info {
     target_group_pair_info {
       target_group {
-        name = local.alb_target_group_blue
+        name = local.alb_target_group_blue // ここでBlue環境のALBのターゲットグループを指定
       }
       target_group {
-        name = aws_lb_target_group.green.name
+        name = aws_lb_target_group.green.name // ここでGreen環境のALBのターゲットグループを指定
       }
       prod_traffic_route {
-        listener_arns = [local.https_listener_arn]
+        listener_arns = [local.https_listener_arn] // ここでALBのリスナー(443ポート)を指定
       }
     }
   }

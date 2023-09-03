@@ -47,14 +47,14 @@ module "alb" {
   #   bucket = module.log_bucket.s3_bucket_id
   # }
 
-  http_tcp_listeners = [
-    {
-      port               = 80
-      protocol           = "HTTP"
-      target_group_index = 0
-      action_type        = "forward"
-    }
-  ]
+  # http_tcp_listeners = [
+  #   {
+  #     port               = 80
+  #     protocol           = "HTTP"
+  #     target_group_index = 0
+  #     action_type        = "forward"
+  #   }
+  # ]
 
   https_listeners = [
     {
