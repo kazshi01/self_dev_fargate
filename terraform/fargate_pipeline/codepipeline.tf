@@ -57,6 +57,14 @@ resource "aws_codepipeline" "fargate_pipeline" {
         FunctionName = aws_lambda_function.slack_approval.function_name
       }
     }
+
+    action {
+      name     = "Approval"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
+    }
   }
 
   stage {

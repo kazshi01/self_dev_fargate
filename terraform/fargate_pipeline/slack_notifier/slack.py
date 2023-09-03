@@ -59,7 +59,7 @@ def lambda_handler(event, context):
             client.put_approval_result(
                 pipelineName='fargate-pipeline',
                 stageName='InvokeLambdaBeforeApproval',
-                actionName='InvokeLambda',
+                actionName='Approval',
                 result={
                     'summary': 'Approved from Slack',
                     'status': 'Approved'
@@ -70,7 +70,7 @@ def lambda_handler(event, context):
             client.put_approval_result(
                 pipelineName='fargate-pipeline',
                 stageName='InvokeLambdaBeforeApproval',
-                actionName='InvokeLambda',
+                actionName='Approval',
                 result={
                     'summary': 'Rejected from Slack',
                     'status': 'Rejected'
