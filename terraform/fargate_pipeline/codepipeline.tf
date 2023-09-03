@@ -44,14 +44,18 @@ resource "aws_codepipeline" "fargate_pipeline" {
   }
 
   stage {
-    name = "ManualApproval"
+    name = "InvokeLambdaBeforeApproval"
 
     action {
-      name     = "Approve"
-      category = "Approval"
+      name     = "InvokeLambda"
+      category = "Invoke"
       owner    = "AWS"
-      provider = "Manual"
+      provider = "Lambda"
       version  = "1"
+
+      configuration = {
+        FunctionName = aws_lambda_function.slack_approval.function_name
+      }
     }
   }
 

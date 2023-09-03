@@ -142,3 +142,78 @@ resource "aws_iam_role_policy_attachment" "codepipeline_codedeploy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployFullAccess"
 }
 
+# LambdaへのInvoke権限を追加
+resource "aws_iam_policy" "codepipeline_lambda_invoke_policy" {
+  name        = "codepipeline-lambda-invoke-policy"
+  description = "CodePipeline permissions to invoke Lambda"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "lambda:InvokeFunction"
+        ],
+        Effect   = "Allow",
+        Resource = aws_lambda_function.slack_approval.arn
+      }
+    ]
+  })
+}
+
+# LambdaへのInvoke権限を持つポリシーをCodePipelineロールにアタッチ
+resource "aws_iam_role_policy_attachment" "codepipeline_lambda_invoke_attachment" {
+  role       = aws_iam_role.codepipeline_role.name
+  policy_arn = aws_iam_policy.codepipeline_lambda_invoke_policy.arn
+}
+
+# Lambda関数の実行に必要なポリシーをアタッチ
+resource "aws_iam_role" "lambda_exec" {
+  name = "lambda_exec_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_exec_policy_attachment" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = aws_iam_policy.lambda_exec_policy.arn
+}
+
+resource "aws_iam_policy" "lambda_exec_policy" {
+  name        = "lambda_exec_policy"
+  description = "An example policy for the Lambda execution role"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Effect   = "Allow",
+        Resource = "*"
+      },
+      {
+        Action = [
+          "codepipeline:PutJobSuccessResult",
+          "codepipeline:PutJobFailureResult"
+        ],
+        Effect   = "Allow",
+        Resource = "*"
+      }
+    ]
+  })
+}
