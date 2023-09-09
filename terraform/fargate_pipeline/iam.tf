@@ -115,7 +115,7 @@ resource "aws_iam_policy" "codepipeline_codecommit_policy" {
           "codecommit:GetUploadArchiveStatus"
         ],
         Effect   = "Allow",
-        Resource = "arn:aws:codecommit:ap-northeast-1:996109426400:self_dev_fargate_repo"
+        Resource = "arn:aws:codecommit:ap-northeast-1:${data.aws_caller_identity.current.account_id}:self_dev_fargate_repo"
       }
     ]
   })
