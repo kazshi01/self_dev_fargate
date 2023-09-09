@@ -35,6 +35,13 @@ resource "aws_iam_policy" "codebuild_policy" {
           "s3:GetObject",
         ],
         Resource = "*"
+      },
+      {
+        Action = [
+          "ssm:GetParameter"
+        ],
+        Effect   = "Allow",
+        Resource = "*"
       }
     ]
   })
