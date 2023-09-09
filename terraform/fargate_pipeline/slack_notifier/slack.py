@@ -1,3 +1,7 @@
+import json
+import urllib.request
+import boto3
+
 def lambda_handler(event, context):
     client = boto3.client('codepipeline')
 
@@ -24,8 +28,21 @@ def lambda_handler(event, context):
         except Exception as e:
             print("Error occurred:", e)
         
-        client.put_job_success_result(jobId=job_id)
+        # CodePipelineのジョブを成功状態にする
+        try:
+            client.put_job_success_result(jobId=job_id)
+        except Exception as e:
+            print("Failed to put job success result:", e)
+            return {
+                'statusCode': 500,
+                'body': 'Failed to put job success result'
+            }
         
+        return {
+            'statusCode': 200,
+            'body': 'Successfully sent Slack message and set job to success'
+        }
+    
     # それ以外の場合
     else:
         return {
