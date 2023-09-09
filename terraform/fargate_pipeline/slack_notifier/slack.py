@@ -11,7 +11,7 @@ def lambda_handler(event, context):
         approval_token = event['CodePipeline.job']['data']['actionConfiguration']['configuration'].get('UserParameters', 'Default_Value')
         
         # Slack に承認が必要な旨を通知
-        slack_url = "https://hooks.slack.com/services/XXXX/XXXX/XXXX"
+        slack_url = "https://hooks.slack.com/services/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"
         message = {
             "text": "承認が必要です",
             "attachments": [
