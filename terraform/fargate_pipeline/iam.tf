@@ -38,7 +38,7 @@ resource "aws_iam_policy" "codebuild_policy" {
       },
       {
         Action = [
-          "ssm:GetParameter"
+          "ssm:GetParameters"
         ],
         Effect   = "Allow",
         Resource = "*"
