@@ -1,7 +1,8 @@
 version: 0.2
 
-parameter-store:
-  AWS_ACCOUNT_ID: MY_AWS_ACCOUNT_ID
+env:
+  parameter-store:
+    AWS_ACCOUNT_ID: MY_AWS_ACCOUNT_ID
 
 phases:
   pre_build:
