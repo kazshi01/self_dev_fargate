@@ -24,6 +24,8 @@ def lambda_handler(event, context):
         except Exception as e:
             print("Error occurred:", e)
         
+        client.put_job_success_result(jobId=job_id)
+        
     # それ以外の場合
     else:
         return {
