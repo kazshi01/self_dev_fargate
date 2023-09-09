@@ -213,6 +213,13 @@ resource "aws_iam_policy" "lambda_exec_policy" {
         ],
         Effect   = "Allow",
         Resource = "*"
+      },
+      {
+        Action = [
+          "ssm:GetParameter"
+        ],
+        Effect   = "Allow",
+        Resource = "*"
       }
     ]
   })

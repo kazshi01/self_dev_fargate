@@ -2,8 +2,16 @@ import json
 import urllib.request
 import boto3
 
+def get_ssm_parameter(name):
+    ssm = boto3.client('ssm')
+    parameter = ssm.get_parameter(Name=name, WithDecryption=True)
+    return parameter['Parameter']['Value']
+
 def lambda_handler(event, context):
     client = boto3.client('codepipeline')
+    
+    # SSMからSlack Webhook URLを取得
+    slack_url = get_ssm_parameter('PIPELINE_SLACK_WEBHOOK_URL')
 
     # CodePipeline からの event の場合
     if 'CodePipeline.job' in event:
@@ -11,7 +19,6 @@ def lambda_handler(event, context):
         approval_token = event['CodePipeline.job']['data']['actionConfiguration']['configuration'].get('UserParameters', 'Default_Value')
         
         # Slack に承認が必要な旨を通知
-        slack_url = "https://hooks.slack.com/services/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"
         message = {
             "text": "ビルドフェーズが完了しました。手動承認が必要です。"
         }
@@ -28,7 +35,6 @@ def lambda_handler(event, context):
         except Exception as e:
             print("Error occurred:", e)
         
-        # CodePipelineのジョブを成功状態にする
         try:
             client.put_job_success_result(jobId=job_id)
         except Exception as e:
