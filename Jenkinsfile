@@ -60,8 +60,8 @@ pipeline {
     stage('Deploy to Fargate') {
       steps {
         script {
-          sh "aws ecs register-task-definition --cli-input-json file://${output_path}"
-          sh "aws ecs update-service --cluster ${cluster_name} --service my-service --task-definition ${task_definition}"
+          sh "aws ecs register-task-definition --cli-input-json file://${output_path} --region ${default_region}"
+          sh "aws ecs update-service --cluster ${cluster_name} --service my-service --task-definition ${task_definition} --region ${default_region}"
         }
       }
     }
