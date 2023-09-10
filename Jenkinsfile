@@ -27,16 +27,6 @@ pipeline {
         }
       }
     }
-    stage('Amend Commit Message') {  // コミットメッセージの修正ステージを追加
-      steps {
-        script {
-          sh '''
-            git commit --amend -m "$(git log --format=%B -n 1) [Build ${BUILD_NUMBER}]"
-            git push origin +HEAD:Jenkins
-          '''
-        }
-      }
-    }
     stage('Deploy Image') {
       steps {
         script {
