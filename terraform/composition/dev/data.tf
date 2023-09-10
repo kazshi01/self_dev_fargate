@@ -1,5 +1,5 @@
 data "aws_ecr_repository" "existing_repo" {
-  name = "dev/practice"
+  name = "jenkins/practice"
 }
 
 locals {

@@ -1,5 +1,5 @@
 # ECR image
-image_tag = ""
+image_tag = "nginx_0.1.63"
 
 # environment-layerと同じ値にする
 northeast_domain = "marukome0909.com"

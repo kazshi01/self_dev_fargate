@@ -7,6 +7,7 @@ pipeline {
     task_definition = "dev-marukome-service"
     cluster_name = "dev-marukome-cluster"
     output_path = "./my-task-definition.json"
+    default_region = "ap-northeast-1"
   }
   agent any
   stages {
@@ -52,7 +53,7 @@ pipeline {
     stage('Export Task Definition to JSON') {
       steps {
         script {
-          sh "aws ecs describe-task-definition --task-definition ${task_definition_family} > ${output_path}"
+          sh "aws ecs describe-task-definition --task-definition ${task_definition_family} --region ${default_region} > ${output_path}"
         }
       }
     }
