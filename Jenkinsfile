@@ -67,13 +67,9 @@ pipeline {
     stage('Modify JSON') {
       steps {
         script {
-          // jqを使ってJSONを修正
+          // Pythonスクリプトを使ってJSONを修正
           sh '''
-          input_file="${output_path}"
-          output_file="${modify_path}"
-
-          modify_task_definition=$(jq '.taskDefinition' ${input_file})
-          echo ${modify_task_definition} > ${output_file}
+          python3 filter_task_definition.py "${output_path}" "${modify_path}"
           '''
         }
       }
