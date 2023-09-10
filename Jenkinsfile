@@ -18,12 +18,22 @@ pipeline {
         }
       }
     }
-    stage('Tagging') { // タグ付けのステージを追加
+    stage('Tagging') {
       steps {
         script {
           def tagName = "nginx_0.1.${BUILD_NUMBER}"
           sh "git tag ${tagName}"
           sh "git push origin ${tagName}"
+        }
+      }
+    }
+    stage('Amend Commit Message') {  // コミットメッセージの修正ステージを追加
+      steps {
+        script {
+          sh '''
+            git commit --amend -m "$(git log --format=%B -n 1) [Build ${BUILD_NUMBER}]"
+            git push origin +HEAD
+          '''
         }
       }
     }
