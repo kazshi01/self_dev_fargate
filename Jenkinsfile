@@ -71,6 +71,7 @@ pipeline {
           sh '''
           python3 filter_task_definition.py "${output_path}" "${modify_path}"
           '''
+          sh "cat ${modify_path}"
         }
       }
     }
