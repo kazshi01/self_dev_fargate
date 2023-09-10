@@ -32,7 +32,7 @@ pipeline {
         script {
           sh '''
             git commit --amend -m "$(git log --format=%B -n 1) [Build ${BUILD_NUMBER}]"
-            git push origin HEAD:Jenkins
+            git push origin +HEAD:Jenkins
           '''
         }
       }
