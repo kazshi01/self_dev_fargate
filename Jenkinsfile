@@ -3,6 +3,10 @@ pipeline {
     image_name = "jenkins/practice"
     ecrurl = "https://996109426400.dkr.ecr.ap-northeast-1.amazonaws.com"
     ecrcredentials = "ecr:ap-northeast-1:AWS_ACCESS_KEY"
+    task_definition_family = "dev-marukome-service"
+    task_definition = "dev-marukome-service"
+    cluster_name = "dev-marukome-cluster"
+    output_path = "./my-task-definition.json"
   }
   agent any
   stages {
@@ -27,12 +31,36 @@ pipeline {
         }
       }
     }
-    stage('Deploy Image') {
+    stage('Push to ECR') {
       steps {
         script {
           docker.withRegistry(ecrurl, ecrcredentials) {
             dockerImage.push("nginx_0.1.$BUILD_NUMBER")
           }
+        }
+      }
+    }
+    stage('Pull from ECR') {
+      steps {
+        script {
+          docker.withRegistry(ecrurl, ecrcredentials) {
+            docker.image("${image_name}:nginx_0.1.$BUILD_NUMBER").pull()
+          }
+        }
+      }
+    }
+    stage('Export Task Definition to JSON') {
+      steps {
+        script {
+          sh "aws ecs describe-task-definition --task-definition ${task_definition_family} > ${output_path}"
+        }
+      }
+    }
+    stage('Deploy to Fargate') {
+      steps {
+        script {
+          sh "aws ecs register-task-definition --cli-input-json file://${output_path}"
+          sh "aws ecs update-service --cluster ${cluster_name} --service my-service --task-definition ${task_definition}"
         }
       }
     }
