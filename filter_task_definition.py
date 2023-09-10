@@ -5,6 +5,9 @@ def main(input_file, output_file):
     with open(input_file, 'r') as f:
         data = json.load(f)
 
+    # Extracting the taskDefinition content
+    task_definition_data = data.get("taskDefinition", {})
+
     filtered_data = {}
     keys = [
         "family", 
@@ -20,8 +23,8 @@ def main(input_file, output_file):
     ]
 
     for key in keys:
-        if key in data:
-            filtered_data[key] = data[key]
+        if key in task_definition_data:
+            filtered_data[key] = task_definition_data[key]
 
     with open(output_file, 'w') as f:
         json.dump(filtered_data, f)
