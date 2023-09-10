@@ -1,3 +1,3 @@
 #FROM - Image to start building on.
-FROM nginx:1.23.5
+FROM nginx:1.24.1
 
