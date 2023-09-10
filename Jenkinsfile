@@ -54,6 +54,7 @@ pipeline {
       steps {
         script {
           sh "aws ecs describe-task-definition --task-definition ${task_definition_family} --region ${default_region} > ${output_path}"
+          sh "ls -l ${output_path}"
         }
       }
     }
