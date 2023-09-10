@@ -6,7 +6,9 @@ pipeline {
     task_definition_family = "dev-marukome-service"
     task_definition = "dev-marukome-service"
     cluster_name = "dev-marukome-cluster"
+    service_name = "dev-marukome-service"
     output_path = "./my-task-definition.json"
+    modify_path = "./my-fixed-task-definition.json"
     default_region = "ap-northeast-1"
   }
   agent any
@@ -53,17 +55,43 @@ pipeline {
     stage('Export Task Definition to JSON') {
       steps {
         script {
-          sh "aws ecs describe-task-definition --task-definition ${task_definition_family} --region ${default_region} > ${output_path}"
+          sh '''
+          aws ecs describe-task-definition --task-definition ${task_definition_family} \
+          --region ${default_region} > ${output_path}
+          '''
           sh "ls -l ${output_path}"
           sh "cat ${output_path}"
+        }
+      }
+    }
+    stage('Modify JSON') {
+      steps {
+        script {
+          // jqを使ってJSONを修正
+          sh '''
+          input_file="${output_path}"
+          output_file="${modify_path}"
+
+          modify_task_definition=$(jq '.taskDefinition' ${input_file})
+          echo ${modify_task_definition} > ${output_file}
+          '''
         }
       }
     }
     stage('Deploy to Fargate') {
       steps {
         script {
-          sh "aws ecs register-task-definition --cli-input-json file://${output_path} --region ${default_region}"
-          sh "aws ecs update-service --cluster ${cluster_name} --service my-service --task-definition ${task_definition} --region ${default_region}"
+          // 修正されたJSONを使用してタスク定義を登録
+          sh '''
+          aws ecs register-task-definition \
+            --cli-input-json file://${modify_path} \
+            --region ${default_region}
+          '''
+          sh '''
+          aws ecs update-service --cluster ${cluster_name} \
+            --service ${service_name} --task-definition ${task_definition} \
+            --region ${default_region}
+          '''
         }
       }
     }
