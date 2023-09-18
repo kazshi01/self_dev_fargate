@@ -3,7 +3,6 @@ name: CI/CD
 on:
   push:
     branches: 
-      - main
       - github/actions
     paths:
       - sample-python-web-app/**
