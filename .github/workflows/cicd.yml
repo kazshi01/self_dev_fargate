@@ -41,7 +41,7 @@ jobs:
           context: .
           file: ./sample-python-web-app/Dockerfile
           push: true
-          tags: 996109426400.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ github.run_number }}
+          tags: 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ github.run_number }}
       
       - name: Update terraform.tfvars
         run: |
