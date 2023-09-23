@@ -2,7 +2,7 @@
 image_tag = "nginx_0.1.63"
 
 # environment-layerと同じ値にする
-northeast_domain = "marukome0909.com"
+northeast_domain = "example.com"
 alb_domain       = "alb"
 top_domain       = "cloudfront"
 
@@ -26,4 +26,4 @@ container_port = 80
 load_balancer_type = "application"
 
 # Route53
-us_east_domain = "*.marukome0909.com"
+us_east_domain = "*.example.com"
