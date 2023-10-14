@@ -2,17 +2,17 @@
 # compositionlayerの変数を変更する時はここも同じ値にする
 ###################################################
 variable "northeast_domain" {
-  type = string
-  default = "marukome0909.com"
+  type    = string
+  default = "example.com"
 }
 
 variable "alb_domain" {
-  type = string
+  type    = string
   default = "alb"
 }
 
 variable "top_domain" {
-  type = string
+  type    = string
   default = "cloudfront"
 }
 
@@ -21,11 +21,11 @@ variable "top_domain" {
 ###############################
 
 variable "vpc_name" {
-  type = string
+  type    = string
   default = "terrafrom-vpc"
 }
 
-variable "vpc_cidr"{
+variable "vpc_cidr" {
   type = string
 }
 
@@ -52,8 +52,8 @@ variable "single_nat_gateway" {
 ###################################
 
 variable "cluster_name" {
-  type = string
-  default     = "terrafrom-cluster"
+  type    = string
+  default = "terrafrom-cluster"
 }
 
 ###################################
@@ -61,17 +61,17 @@ variable "cluster_name" {
 ###################################
 
 variable "service_name" {
-  type = string
-  default     = "terrafrom-service"
+  type    = string
+  default = "terrafrom-service"
 }
 
 variable "container_name" {
-  type = string
+  type    = string
   default = "terraform-container"
 }
 
 variable "container_port" {
-  type = number
+  type    = number
   default = 80
 }
 
@@ -85,12 +85,12 @@ variable "image" {
 ###################################
 
 variable "alb_name" {
-  type = string
-  default     = "terrafrom-alb"
+  type    = string
+  default = "terrafrom-alb"
 }
 
 variable "load_balancer_type" {
-  type = string
+  type    = string
   default = "application"
 }
 
@@ -98,7 +98,7 @@ variable "load_balancer_type" {
 # ROUTE53
 ###############################
 variable "zone_name" {
-  type =string
+  type = string
 }
 
 variable "zones" {
