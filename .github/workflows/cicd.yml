@@ -7,6 +7,7 @@ on:
     paths:
       - sample-python-web-app/**
       - .github/workflows/cicd.yml
+      - terraform/**
 
 env:
   AWS_REGION: ap-northeast-1 # your AWS region
