@@ -2,7 +2,7 @@ name: CI/CD
 
 on:
   push:
-    branches: 
+    branches:
       - github/actions
     paths:
       - sample-python-web-app/**
@@ -18,7 +18,7 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,17 +32,20 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
+        id: login
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v4
+        env:
+          ECR_REGISTRY: ${{ steps.login.outputs.registry }}
         with:
           context: .
           file: ./sample-python-web-app/Dockerfile
           push: true
-          tags: 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ github.run_number }}
-      
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.run_number }}
+
       - name: Update terraform.tfvars
         run: |
           sed -i "s/^image_tag.*/image_tag = \"${{ github.run_number }}\"/" ./terraform/composition/dev/terraform.tfvars
@@ -71,7 +74,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-      
+
       - name: Terraform code check and plan
         run: |
           cd ./terraform/composition/dev/
@@ -79,5 +82,3 @@ jobs:
           terraform init -no-color -backend-config=backend-config.tfvars
           terraform validate -no-color
           terraform plan
-
-
