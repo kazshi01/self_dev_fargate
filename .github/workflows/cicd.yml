@@ -44,6 +44,7 @@ jobs:
           image: repo/image
           tags: ${{ github.run_number }}
           registry: ${{ env.ECR_REGISTRY }}
+          dockerfile: ./sample-python-web-app/Dockerfile
 
       # - name: Build and push
       #   id: docker_build
