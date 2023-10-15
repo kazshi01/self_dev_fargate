@@ -33,13 +33,15 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
-        id: login
-        uses: aws-actions/amazon-ecr-login@v1
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: 'true'
 
       - uses: mr-smithers-excellent/docker-build-push@v6
         name: Build & push Docker image
         env:
-          ECR_REGISTRY: ${{ steps.login.outputs.registry }}
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
         with:
           registry: ${{ env.ECR_REGISTRY }}
           image: ${{ env.ECR_REPOSITORY }}
