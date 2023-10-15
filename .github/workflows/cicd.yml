@@ -36,16 +36,25 @@ jobs:
         id: login
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v4
+      - uses: mr-smithers-excellent/docker-build-push@v6
+        name: Build & push Docker image
         env:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
         with:
-          context: .
-          file: ./sample-python-web-app/Dockerfile
-          push: true
+          image: repo/image
           tags: ${{ github.run_number }}
+          registry: ${{ env.ECR_REGISTRY }}
+
+      # - name: Build and push
+      #   id: docker_build
+      #   uses: docker/build-push-action@v4
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login.outputs.registry }}
+      #   with:
+      #     context: .
+      #     file: ./sample-python-web-app/Dockerfile
+      #     push: true
+      #     tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.run_number }}
 
       - name: Update terraform.tfvars
         run: |
