@@ -41,21 +41,10 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
         with:
+          registry: ${{ env.ECR_REGISTRY }}
           image: ${{ env.ECR_REPOSITORY }}
           tags: ${{ github.run_number }}
-          registry: ${{ env.ECR_REGISTRY }}
           dockerfile: ./sample-python-web-app/Dockerfile
-
-      # - name: Build and push
-      #   id: docker_build
-      #   uses: docker/build-push-action@v4
-      #   env:
-      #     ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-      #   with:
-      #     context: .
-      #     file: ./sample-python-web-app/Dockerfile
-      #     push: true
-      #     tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.run_number }}
 
       - name: Update terraform.tfvars
         run: |
