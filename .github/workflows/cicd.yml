@@ -41,7 +41,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
         with:
-          image: repo/image
+          image: ${{ env.ECR_REPOSITORY }}
           tags: ${{ github.run_number }}
           registry: ${{ env.ECR_REGISTRY }}
           dockerfile: ./sample-python-web-app/Dockerfile
